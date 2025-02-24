@@ -20,8 +20,7 @@ VAR=r1i1p1f1
 VDATE=v20210325
 TABLE=3hr
 GRID=gn
-year=1980
-last_year=2020
+
 
 
 mkdir -p /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation//$MODEL/$EXPR/$VAR/http_files
@@ -29,8 +28,9 @@ cd /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/$MODEL/$E
 
 
 #10 years at a time for rsds and rsdsdiff
-
-vars=("rsds rsdsdiffs")
+year=1980
+last_year=2014
+vars=("rsds rsdsdiff")
 ((yearP10=$year+9))
 while [ $year -le $last_year ]
 do
@@ -48,7 +48,6 @@ do
  ((year+=10))
  ((yearP10+=10)) 
  done
- 
 
  
  #10 years at a time for tas
@@ -57,19 +56,68 @@ do
 while [ $year -le $last_year ]
 do
    echo $year $yearP10
-     for var in $vars
+     for var in $tas
      do
          DATES=${year}01010130-${yearP10}01010130
-         URL=${root}/${MODEL}/${EXPR}/${VAR}/${TABLE}/${tas}/$GRID/$VDATE/$DATE
+         URL=${root}/${MODEL}/${EXPR}/${VAR}/${TABLE}/${var}/$GRID/$VDATE/$DATE
          echo $URL
          echo $DATES
 
          wget -nc -nd -t 3 $URL/${var}_${TABLE}_${MODEL}_${EXPR}_${VAR}_${GRID}_${DATES}.nc
      done
 
- ((year+=11))
+ ((year+=11)) #11 because tas finishes at 1090, 2000, 2010 etc
  ((yearP10+=11)) 
  done 
+
+# FIVE YEARS at a time for the last file of rsds rsdsdiff
+year=2010
+last_year=2014
+vars=("rsds rsdsdiff")
+((yearP5=$year+4))
+while [ $year -le $last_year ]
+do
+    echo $year $yearP5
+
+    for var in $vars
+    do
+        DATES=${year}01010130-${yearP5}12312230
+        URL=${root}/${MODEL}/${EXPR}/${VAR}/${TABLE}/${var}/$GRID/$VDATE/$DATE
+        echo $URL
+        echo $DATES
+        
+        wget -nc -nd -t 3 $URL/${var}_${TABLE}_${MODEL}_${EXPR}_${VAR}_${GRID}_${DATES}.nc
+    done
+
+((year+=5))
+((yearP5+=5))
+done
+
+# FIVE YEARS at a time for the last file of tas
+year=2010
+last_year=2014
+vars=("tas")
+((yearP5=$year+5))
+while [ $year -le $last_year ]
+do
+    echo $year $yearP5
+
+    for var in $vars
+    do
+        DATES=${year}01010130-${yearP5}01010130
+        URL=${root}/${MODEL}/${EXPR}/${VAR}/${TABLE}/${var}/$GRID/$VDATE/$DATE
+        echo $URL
+        echo $DATES
+        
+        wget -nc -nd -t 3 $URL/${var}_${TABLE}_${MODEL}_${EXPR}_${VAR}_${GRID}_${DATES}.nc
+    done
+
+((year+=6))
+((yearP5+=6))
+done
+
+
+
 
 
 
