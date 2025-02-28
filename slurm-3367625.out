@@ -1,0 +1,29 @@
+Running wget_script_2025-2-26_20-45-39.sh version: 1.3.2
+Use wget_script_2025-2-26_20-45-39.sh -h for help.
+
+Script created for 9 file(s)
+(The count won't match if you manually edit this file!)
+
+
+
+
+
+tas_3hr_ACCESS-CM2_ssp585_r1i1p1f1_gn_201501010300-202501010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_ACCESS-CM2_ssp585_r1i1p1f1_gn_202501010300-203501010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_ACCESS-CM2_ssp585_r1i1p1f1_gn_203501010300-204501010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_ACCESS-CM2_ssp585_r1i1p1f1_gn_204501010300-205501010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_ACCESS-CM2_ssp585_r1i1p1f1_gn_205501010300-206501010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_ACCESS-CM2_ssp585_r1i1p1f1_gn_206501010300-207501010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_ACCESS-CM2_ssp585_r1i1p1f1_gn_207501010300-208501010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_ACCESS-CM2_ssp585_r1i1p1f1_gn_208501010300-209501010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_ACCESS-CM2_ssp585_r1i1p1f1_gn_209501010300-210101010000.nc ...Downloading
+  sha256 ok. done!
+done

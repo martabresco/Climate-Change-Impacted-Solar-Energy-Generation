@@ -13,7 +13,11 @@ set echo
 # link for tas: 
 #https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS/
 #ACCESS-CM2/historical/r1i1p1f1/3hr/tas/gn/v20210325/tas_3hr_ACCESS-CM2_historical_r1i1p1f1_gn_195001010300-196001010000.nc
-root=https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS/
+
+#https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS/
+#ACCESS-CM2/historical/r1i1p1f1/3hr/tas/gn/v20210325/tas_3hr_ACCESS-CM2_historical_r1i1p1f1_gn_198001010130-19901010000.nc
+
+root=https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS
 MODEL=ACCESS-CM2
 EXPR=historical
 VAR=r1i1p1f1
@@ -38,7 +42,7 @@ do
      for var in $vars
      do
          DATES=${year}01010130-${yearP10}12312230
-         URL=${root}/${MODEL}/${EXPR}/${VAR}/${TABLE}/${var}/$GRID/$VDATE/$DATE
+         URL=${root}/${MODEL}/${EXPR}/${VAR}/${TABLE}/${var}/$GRID/$VDATE
          echo $URL
          echo $DATES
 
@@ -51,24 +55,27 @@ do
 
  
  #10 years at a time for tas
+yearTAS=1980
+last_yearTAS=2015
  tas=("tas")
-((yearP10=$year+10))
-while [ $year -le $last_year ]
+((yearP10TAS=$yearTAS+10))
+while [ $yearTAS -le $last_yearTAS ]
 do
-   echo $year $yearP10
+   echo $yearTAS $yearP10TAS
      for var in $tas
      do
-         DATES=${year}01010130-${yearP10}01010130
-         URL=${root}/${MODEL}/${EXPR}/${VAR}/${TABLE}/${var}/$GRID/$VDATE/$DATE
+         DATES=${yearTAS}01010300-${yearP10TAS}01010000
+         URL=${root}/${MODEL}/${EXPR}/${VAR}/${TABLE}/${var}/$GRID/$VDATE
          echo $URL
          echo $DATES
 
          wget -nc -nd -t 3 $URL/${var}_${TABLE}_${MODEL}_${EXPR}_${VAR}_${GRID}_${DATES}.nc
      done
-
- ((year+=11)) #11 because tas finishes at 1090, 2000, 2010 etc
- ((yearP10+=11)) 
- done 
+echo "Before Increment: yearTAS=$yearTAS, yearP10TAS=$yearP10TAS"
+ ((yearTAS+=10)) 
+ ((yearP10TAS+=10)) 
+echo "After Increment: yearTAS=$yearTAS, yearP10TAS=$yearP10TAS"
+done 
 
 # FIVE YEARS at a time for the last file of rsds rsdsdiff
 year=2010
@@ -82,7 +89,7 @@ do
     for var in $vars
     do
         DATES=${year}01010130-${yearP5}12312230
-        URL=${root}/${MODEL}/${EXPR}/${VAR}/${TABLE}/${var}/$GRID/$VDATE/$DATE
+        URL=${root}/${MODEL}/${EXPR}/${VAR}/${TABLE}/${var}/$GRID/$VDATE
         echo $URL
         echo $DATES
         
@@ -92,30 +99,28 @@ do
 ((year+=5))
 ((yearP5+=5))
 done
-
-# FIVE YEARS at a time for the last file of tas
-year=2010
-last_year=2014
-vars=("tas")
-((yearP5=$year+5))
-while [ $year -le $last_year ]
+#
+## FIVE YEARS at a time for the last file of tas
+yearTAS=2010
+last_yearTAS=2015
+tas=("tas")
+((yearP5TAS=$yearTAS+5))
+while [ $yearTAS -le $last_yearTAS ]
 do
-    echo $year $yearP5
+   echo $yearTAS $yearP5TAS
+     for var in $tas
+     do
+         DATES=${yearTAS}01010300-${yearP5TAS}01010000
+         URL=${root}/${MODEL}/${EXPR}/${VAR}/${TABLE}/${var}/$GRID/$VDATE
+         echo $URL
+         echo $DATES
 
-    for var in $vars
-    do
-        DATES=${year}01010130-${yearP5}01010130
-        URL=${root}/${MODEL}/${EXPR}/${VAR}/${TABLE}/${var}/$GRID/$VDATE/$DATE
-        echo $URL
-        echo $DATES
-        
-        wget -nc -nd -t 3 $URL/${var}_${TABLE}_${MODEL}_${EXPR}_${VAR}_${GRID}_${DATES}.nc
-    done
+         wget -nc -nd -t 3 $URL/${var}_${TABLE}_${MODEL}_${EXPR}_${VAR}_${GRID}_${DATES}.nc
+     done
 
-((year+=6))
-((yearP5+=6))
-done
-
+ ((yearTAS+=5)) 
+ ((yearP5TAS+=5)) 
+ done 
 
 
 
