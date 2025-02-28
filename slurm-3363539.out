@@ -1,0 +1,73 @@
+1980 1989
+https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsds/gn/v20210325/
+198001010130-198912312230
+File ‘rsds_3hr_ACCESS-CM2_historical_r1i1p1f1_gn_198001010130-198912312230.nc’ already there; not retrieving.
+
+https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsdsdiffs/gn/v20210325/
+198001010130-198912312230
+--2025-02-24 11:20:09--  https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsdsdiffs/gn/v20210325//rsdsdiffs_3hr_ACCESS-CM2_historical_r1i1p1f1_gn_198001010130-198912312230.nc
+Resolving esgf.ceda.ac.uk (esgf.ceda.ac.uk)... 130.246.128.97
+Connecting to esgf.ceda.ac.uk (esgf.ceda.ac.uk)|130.246.128.97|:443... connected.
+HTTP request sent, awaiting response... 404 Not Found
+2025-02-24 11:20:12 ERROR 404: Not Found.
+
+1990 1999
+https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsds/gn/v20210325/
+199001010130-199912312230
+File ‘rsds_3hr_ACCESS-CM2_historical_r1i1p1f1_gn_199001010130-199912312230.nc’ already there; not retrieving.
+
+https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsdsdiffs/gn/v20210325/
+199001010130-199912312230
+--2025-02-24 11:20:12--  https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsdsdiffs/gn/v20210325//rsdsdiffs_3hr_ACCESS-CM2_historical_r1i1p1f1_gn_199001010130-199912312230.nc
+Resolving esgf.ceda.ac.uk (esgf.ceda.ac.uk)... 130.246.128.97
+Connecting to esgf.ceda.ac.uk (esgf.ceda.ac.uk)|130.246.128.97|:443... connected.
+HTTP request sent, awaiting response... 404 Not Found
+2025-02-24 11:20:12 ERROR 404: Not Found.
+
+2000 2009
+https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsds/gn/v20210325/
+200001010130-200912312230
+File ‘rsds_3hr_ACCESS-CM2_historical_r1i1p1f1_gn_200001010130-200912312230.nc’ already there; not retrieving.
+
+https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsdsdiffs/gn/v20210325/
+200001010130-200912312230
+--2025-02-24 11:20:12--  https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsdsdiffs/gn/v20210325//rsdsdiffs_3hr_ACCESS-CM2_historical_r1i1p1f1_gn_200001010130-200912312230.nc
+Resolving esgf.ceda.ac.uk (esgf.ceda.ac.uk)... 130.246.128.97
+Connecting to esgf.ceda.ac.uk (esgf.ceda.ac.uk)|130.246.128.97|:443... connected.
+HTTP request sent, awaiting response... 404 Not Found
+2025-02-24 11:20:13 ERROR 404: Not Found.
+
+2010 2019
+https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsds/gn/v20210325/
+201001010130-201912312230
+--2025-02-24 11:20:13--  https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsds/gn/v20210325//rsds_3hr_ACCESS-CM2_historical_r1i1p1f1_gn_201001010130-201912312230.nc
+Resolving esgf.ceda.ac.uk (esgf.ceda.ac.uk)... 130.246.128.97
+Connecting to esgf.ceda.ac.uk (esgf.ceda.ac.uk)|130.246.128.97|:443... connected.
+HTTP request sent, awaiting response... 404 Not Found
+2025-02-24 11:20:13 ERROR 404: Not Found.
+
+https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsdsdiffs/gn/v20210325/
+201001010130-201912312230
+--2025-02-24 11:20:13--  https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsdsdiffs/gn/v20210325//rsdsdiffs_3hr_ACCESS-CM2_historical_r1i1p1f1_gn_201001010130-201912312230.nc
+Resolving esgf.ceda.ac.uk (esgf.ceda.ac.uk)... 130.246.128.97
+Connecting to esgf.ceda.ac.uk (esgf.ceda.ac.uk)|130.246.128.97|:443... connected.
+HTTP request sent, awaiting response... 404 Not Found
+2025-02-24 11:20:13 ERROR 404: Not Found.
+
+2020 2029
+https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsds/gn/v20210325/
+202001010130-202912312230
+--2025-02-24 11:20:13--  https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsds/gn/v20210325//rsds_3hr_ACCESS-CM2_historical_r1i1p1f1_gn_202001010130-202912312230.nc
+Resolving esgf.ceda.ac.uk (esgf.ceda.ac.uk)... 130.246.128.97
+Connecting to esgf.ceda.ac.uk (esgf.ceda.ac.uk)|130.246.128.97|:443... connected.
+HTTP request sent, awaiting response... 404 Not Found
+2025-02-24 11:20:13 ERROR 404: Not Found.
+
+https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsdsdiffs/gn/v20210325/
+202001010130-202912312230
+--2025-02-24 11:20:13--  https://esgf.ceda.ac.uk/thredds/fileServer/esg_cmip6/CMIP6/CMIP/CSIRO-ARCCSS//ACCESS-CM2/historical/r1i1p1f1/3hr/rsdsdiffs/gn/v20210325//rsdsdiffs_3hr_ACCESS-CM2_historical_r1i1p1f1_gn_202001010130-202912312230.nc
+Resolving esgf.ceda.ac.uk (esgf.ceda.ac.uk)... 130.246.128.97
+Connecting to esgf.ceda.ac.uk (esgf.ceda.ac.uk)|130.246.128.97|:443... connected.
+HTTP request sent, awaiting response... 404 Not Found
+2025-02-24 11:20:13 ERROR 404: Not Found.
+
