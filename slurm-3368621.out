@@ -1,0 +1,47 @@
+Running wget_script_2025-2-28_11-46-25.sh version: 1.3.2
+Use wget_script_2025-2-28_11-46-25.sh -h for help.
+
+Script created for 9 file(s)
+(The count won't match if you manually edit this file!)
+
+
+
+Retrieving Federation Certificates...--2025-02-28 11:49:02--  https://github.com/ESGF/esgf-dist/raw/master/installer/certs/esg-truststore.ts
+Resolving github.com (github.com)... 140.82.121.3
+Connecting to github.com (github.com)|140.82.121.3|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://raw.githubusercontent.com/ESGF/esgf-dist/master/installer/certs/esg-truststore.ts [following]
+--2025-02-28 11:49:03--  https://raw.githubusercontent.com/ESGF/esgf-dist/master/installer/certs/esg-truststore.ts
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.110.133, 185.199.111.133, 185.199.108.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.110.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 35962 (35K) [video/mp2t]
+Saving to: ‘/home/s233224/.esg/esg-truststore.ts’
+
+     0K .......... .......... .......... .....                100% 2.49M=0.01s
+
+2025-02-28 11:49:03 (2.49 MB/s) - ‘/home/s233224/.esg/esg-truststore.ts’ saved [35962/35962]
+
+mv: cannot overwrite non-directory ‘/home/s233224/.esg/certificates’ with directory ‘/home/s233224/.esg/esg_trusted_certificates’
+done!
+
+
+tas_3hr_CanESM5_ssp585_r1i1p2f1_gn_201501010300-202101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_ssp585_r1i1p2f1_gn_202101010300-203101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_ssp585_r1i1p2f1_gn_203101010300-204101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_ssp585_r1i1p2f1_gn_204101010300-205101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_ssp585_r1i1p2f1_gn_205101010300-206101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_ssp585_r1i1p2f1_gn_206101010300-207101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_ssp585_r1i1p2f1_gn_207101010300-208101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_ssp585_r1i1p2f1_gn_208101010300-209101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_ssp585_r1i1p2f1_gn_209101010300-210101010000.nc ...Downloading
+  sha256 ok. done!
+done

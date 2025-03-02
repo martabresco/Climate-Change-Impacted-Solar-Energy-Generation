@@ -1,0 +1,63 @@
+Running wget_script_2025-2-28_11-37-23.sh version: 1.3.2
+Use wget_script_2025-2-28_11-37-23.sh -h for help.
+
+Script created for 17 file(s)
+(The count won't match if you manually edit this file!)
+
+
+
+Retrieving Federation Certificates...--2025-02-28 11:39:14--  https://github.com/ESGF/esgf-dist/raw/master/installer/certs/esg-truststore.ts
+Resolving github.com (github.com)... 140.82.121.4
+Connecting to github.com (github.com)|140.82.121.4|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://raw.githubusercontent.com/ESGF/esgf-dist/master/installer/certs/esg-truststore.ts [following]
+--2025-02-28 11:39:14--  https://raw.githubusercontent.com/ESGF/esgf-dist/master/installer/certs/esg-truststore.ts
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.109.133, 185.199.110.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 35962 (35K) [video/mp2t]
+Saving to: ‘/home/s233224/.esg/esg-truststore.ts’
+
+     0K .......... .......... .......... .....                100% 2.56M=0.01s
+
+2025-02-28 11:39:14 (2.56 MB/s) - ‘/home/s233224/.esg/esg-truststore.ts’ saved [35962/35962]
+
+mv: cannot overwrite non-directory ‘/home/s233224/.esg/certificates’ with directory ‘/home/s233224/.esg/esg_trusted_certificates’
+done!
+
+
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_185001010300-186101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_186101010300-187101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_187101010300-188101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_188101010300-189101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_189101010300-190101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_190101010300-191101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_191101010300-192101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_192101010300-193101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_193101010300-194101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_194101010300-195101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_195101010300-196101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_196101010300-197101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_197101010300-198101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_198101010300-199101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_199101010300-200101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_200101010300-201101010000.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_CanESM5_historical_r1i1p2f1_gn_201101010300-201501010000.nc ...Downloading
+  sha256 ok. done!
+done
