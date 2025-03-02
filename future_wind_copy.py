@@ -180,7 +180,7 @@ def search_esgf(conn,
 
 def combine_hemispheres(var,time=None,lev=None,for_interp=False, 
     reverse_lev=False, 
-    minlat=20.,maxlat=75.,minlon=330.,maxlon=50.):  
+    minlat=35.,maxlat=75.,minlon=350.,maxlon=20.):  
     '''Combine array (var) from both hemispheres with continuous
     coordinates.
     In some datasets the vertical coordinate is reversed.'''

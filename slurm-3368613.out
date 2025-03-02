@@ -1,0 +1,80 @@
+Running wget_script_2025-2-28_11-25-10.sh version: 1.3.2
+Use wget_script_2025-2-28_11-25-10.sh -h for help.
+
+Script created for 17 file(s)
+(The count won't match if you manually edit this file!)
+
+
+
+Retrieving Federation Certificates...--2025-02-28 11:30:19--  https://github.com/ESGF/esgf-dist/raw/master/installer/certs/esg-truststore.ts
+Resolving github.com (github.com)... 140.82.121.3
+Connecting to github.com (github.com)|140.82.121.3|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://raw.githubusercontent.com/ESGF/esgf-dist/master/installer/certs/esg-truststore.ts [following]
+--2025-02-28 11:30:20--  https://raw.githubusercontent.com/ESGF/esgf-dist/master/installer/certs/esg-truststore.ts
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.109.133, 185.199.110.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 35962 (35K) [video/mp2t]
+Saving to: ‘/home/s233224/.esg/esg-truststore.ts’
+
+     0K .......... .......... .......... .....                100%  609K=0.06s
+
+2025-02-28 11:30:20 (609 KB/s) - ‘/home/s233224/.esg/esg-truststore.ts’ saved [35962/35962]
+
+tar: esg_trusted_certificates/064e0aa9.0: Cannot open: File exists
+tar: esg_trusted_certificates/1e09d511.0: Cannot open: File exists
+tar: esg_trusted_certificates/244b5494.0: Cannot open: File exists
+tar: esg_trusted_certificates/8082542d.0: Cannot open: File exists
+tar: Exiting with failure status due to previous errors
+--2025-02-28 11:30:20--  https://raw.githubusercontent.com/ESGF/esgf-dist/master/installer/certs/esg_trusted_certificates.tar
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.109.133, 185.199.110.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 102400 (100K) [application/octet-stream]
+Saving to: ‘esg_trusted_certificates.tar’
+
+     0K .......... .......... .......... .......... .......... 50% 1.55M 0s
+    50K .......... .......... .......... .......... ..........100% 1.92M 0s
+   100K                                                       100% 0.00 =0.06s
+
+2025-02-28 11:30:21 (1.71 MB/s) - ‘esg_trusted_certificates.tar’ saved [102400/102400]
+
+Could't update certs!
+
+
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_185001010130-186012312230.nc ...Downloading
+  sha256 ok. done!
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_186101010130-187012312230.nc ...Downloading
+  sha256 ok. done!
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_187101010130-188012312230.nc ...Downloading
+  sha256 ok. done!
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_188101010130-189012312230.nc ...Downloading
+  sha256 ok. done!
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_189101010130-190012312230.nc ...Downloading
+  sha256 ok. done!
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_190101010130-191012312230.nc ...Downloading
+  sha256 ok. done!
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_191101010130-192012312230.nc ...Downloading
+  sha256 ok. done!
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_192101010130-193012312230.nc ...Downloading
+  sha256 ok. done!
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_193101010130-194012312230.nc ...Downloading
+  sha256 ok. done!
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_194101010130-195012312230.nc ...Downloading
+  sha256 ok. done!
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_195101010130-196012312230.nc ...Downloading
+  sha256 ok. done!
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_196101010130-197012312230.nc ...Downloading
+  sha256 ok. done!
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_197101010130-198012312230.nc ...Downloading
+  sha256 ok. done!
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_198101010130-199012312230.nc ...Downloading
+  sha256 ok. done!
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_199101010130-200012312230.nc ...Downloading
+  sha256 ok. done!
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_200101010130-201012312230.nc ...Downloading
+  sha256 ok. done!
+rsds_3hr_CanESM5_historical_r1i1p2f1_gn_201101010130-201412312230.nc ...Downloading
+  sha256 ok. done!
+done
