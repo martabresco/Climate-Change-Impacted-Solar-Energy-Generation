@@ -1,0 +1,47 @@
+Running wget_script_2025-3-3_17-56-13.sh version: 1.3.2
+Use wget_script_2025-3-3_17-56-13.sh -h for help.
+
+Script created for 29 file(s)
+(The count won't match if you manually edit this file!)
+
+
+
+Retrieving Federation Certificates...--2025-03-03 17:58:09--  https://github.com/ESGF/esgf-dist/raw/master/installer/certs/esg-truststore.ts
+Resolving github.com (github.com)... 140.82.121.4
+Connecting to github.com (github.com)|140.82.121.4|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://raw.githubusercontent.com/ESGF/esgf-dist/master/installer/certs/esg-truststore.ts [following]
+--2025-03-03 17:58:09--  https://raw.githubusercontent.com/ESGF/esgf-dist/master/installer/certs/esg-truststore.ts
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.111.133, 185.199.108.133, 185.199.109.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 35962 (35K) [video/mp2t]
+Saving to: ‘/home/s233224/.esg/esg-truststore.ts’
+
+     0K .......... .......... .......... .....                100% 2.11M=0.02s
+
+2025-03-03 17:58:09 (2.11 MB/s) - ‘/home/s233224/.esg/esg-truststore.ts’ saved [35962/35962]
+
+mv: cannot overwrite non-directory ‘/home/s233224/.esg/certificates’ with directory ‘/home/s233224/.esg/esg_trusted_certificates’
+done!
+
+
+tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_201501010000-202412312100.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_202501010000-203412312100.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_203501010000-204412312100.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_204501010000-205412312100.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_205501010000-206412312100.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_206501010000-207412312100.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_207501010000-208412312100.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_208501010000-209412312100.nc ...Downloading
+  sha256 ok. done!
+tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_209501010000-210012312100.nc ...Downloading
+  sha256 ok. done!
+done
