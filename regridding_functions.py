@@ -16,11 +16,17 @@ def read_and_average_era5_marta(field="influx_direct"):
     """Read a single NetCDF file containing multiple years and compute the long-term mean"""
     
     # Path to the single file containing data for multiple years
-    diri = "/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/"
-    file = "europe-2013.nc"  # Update this to your actual file name
+    #diri = "/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/"
+    #file_2013 = "europe-2013.nc"  # Update this to your actual file name
+    years=[1996, 2010, 2012, 2013]
+    path="/groups/EXTREMES/cutouts/"
+    files=[f'{path}europe-{year}-era5.nc' for year in years]
 
-    # Open the single NetCDF file
-    df = xr.open_dataset(diri + file, decode_times=False)
+    # Print the generated file paths to verify correctness
+    print(files)  # Check the paths generated (debugging step)
+    
+    # Open the dataset with xarray
+    df = xr.open_mfdataset(files, combine="by_coords", join="inner")
 
     # Compute the long-term mean of the selected field over the time dimension
     return df[field].mean(dim="time")
