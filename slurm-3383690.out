@@ -1,60 +1,0 @@
-Lmod has detected the following error: The following module(s) are unknown:
-"python/3.13.1"
-
-Please check the spelling or version number. Also try "module spider ..."
-It is also possible your cache file is out-of-date; it may help to try:
-  $ module --ignore-cache load "python/3.13.1"
-
-Also make sure that all modulefiles written in TCL start with the string
-#%Module
-
-
-
-INFO:atlite.cutout:Building new cutout europe_1x1.nc
-INFO:atlite.data:Storing temporary files in /tmp/tmpasbikkze
-INFO:atlite.data:Calculating and writing with module era5:
-INFO:atlite.datasets.era5:Requesting data for feature height...
-2025-03-17 15:26:13,838 WARNING [2024-06-16T00:00:00] CDS API syntax is changed and some keys or parameter names may have also changed. To avoid requests failing, please use the "Show API request code" tool on the dataset Download Form to check you are using the correct syntax for your API request.
-WARNING:datapi.legacy_api_client:[2024-06-16T00:00:00] CDS API syntax is changed and some keys or parameter names may have also changed. To avoid requests failing, please use the "Show API request code" tool on the dataset Download Form to check you are using the correct syntax for your API request.
-INFO:atlite.datasets.era5:CDS: Downloading variables
-	geopotential (2014-1)
-
-INFO:multiurl.base:Downloading https://object-store.os-api.cci2.ecmwf.int:443/cci2-prod-cache-1/2025-03-17/55437812c1f92c6f79747028c7fbefbb.nc
-55437812c1f92c6f79747028c7fbefbb.nc:   0%|          | 0.00/31.2k [00:00<?, ?B/s]55437812c1f92c6f79747028c7fbefbb.nc: 100%|██████████| 31.2k/31.2k [00:00<00:00, 164kB/s]                                                                                        INFO:atlite.datasets.era5:Requesting data for feature temperature...
-2025-03-17 15:26:49,463 WARNING [2024-06-16T00:00:00] CDS API syntax is changed and some keys or parameter names may have also changed. To avoid requests failing, please use the "Show API request code" tool on the dataset Download Form to check you are using the correct syntax for your API request.
-WARNING:datapi.legacy_api_client:[2024-06-16T00:00:00] CDS API syntax is changed and some keys or parameter names may have also changed. To avoid requests failing, please use the "Show API request code" tool on the dataset Download Form to check you are using the correct syntax for your API request.
-INFO:atlite.datasets.era5:CDS: Downloading variables
-	2m_temperature (2014-[1])
-	soil_temperature_level_4 (2014-[1])
-	2m_dewpoint_temperature (2014-[1])
-
-INFO:multiurl.base:Downloading https://object-store.os-api.cci2.ecmwf.int:443/cci2-prod-cache-1/2025-03-17/77ebd14575f377c272230041ac72f70f.nc
-77ebd14575f377c272230041ac72f70f.nc:   0%|          | 0.00/440k [00:00<?, ?B/s]77ebd14575f377c272230041ac72f70f.nc: 100%|██████████| 440k/440k [00:00<00:00, 1.27MB/s]                                                                                       INFO:atlite.datasets.era5:Requesting data for feature wind...
-2025-03-17 15:27:23,607 WARNING [2024-06-16T00:00:00] CDS API syntax is changed and some keys or parameter names may have also changed. To avoid requests failing, please use the "Show API request code" tool on the dataset Download Form to check you are using the correct syntax for your API request.
-WARNING:datapi.legacy_api_client:[2024-06-16T00:00:00] CDS API syntax is changed and some keys or parameter names may have also changed. To avoid requests failing, please use the "Show API request code" tool on the dataset Download Form to check you are using the correct syntax for your API request.
-INFO:atlite.datasets.era5:CDS: Downloading variables
-	10m_u_component_of_wind (2014-[1])
-	10m_v_component_of_wind (2014-[1])
-	100m_u_component_of_wind (2014-[1])
-	100m_v_component_of_wind (2014-[1])
-	forecast_surface_roughness (2014-[1])
-
-INFO:multiurl.base:Downloading https://object-store.os-api.cci2.ecmwf.int:443/cci2-prod-cache-1/2025-03-17/83e5a421e0480d6a72da563e3546a1f1.nc
-83e5a421e0480d6a72da563e3546a1f1.nc:   0%|          | 0.00/1.18M [00:00<?, ?B/s]83e5a421e0480d6a72da563e3546a1f1.nc:  84%|████████▍ | 1.00M/1.18M [00:00<00:00, 2.81MB/s]                                                                                         INFO:atlite.datasets.era5:Requesting data for feature runoff...
-2025-03-17 15:27:57,546 WARNING [2024-06-16T00:00:00] CDS API syntax is changed and some keys or parameter names may have also changed. To avoid requests failing, please use the "Show API request code" tool on the dataset Download Form to check you are using the correct syntax for your API request.
-WARNING:datapi.legacy_api_client:[2024-06-16T00:00:00] CDS API syntax is changed and some keys or parameter names may have also changed. To avoid requests failing, please use the "Show API request code" tool on the dataset Download Form to check you are using the correct syntax for your API request.
-INFO:atlite.datasets.era5:CDS: Downloading variables
-	runoff (2014-[1])
-
-INFO:multiurl.base:Downloading https://object-store.os-api.cci2.ecmwf.int:443/cci2-prod-cache-1/2025-03-17/87aec61af77fcc52d4a1b297f70a8adc.nc
-87aec61af77fcc52d4a1b297f70a8adc.nc:   0%|          | 0.00/77.7k [00:00<?, ?B/s]87aec61af77fcc52d4a1b297f70a8adc.nc: 100%|██████████| 77.7k/77.7k [00:00<00:00, 331kB/s]                                                                                        INFO:atlite.datasets.era5:Requesting data for feature influx...
-2025-03-17 15:28:12,429 WARNING [2024-06-16T00:00:00] CDS API syntax is changed and some keys or parameter names may have also changed. To avoid requests failing, please use the "Show API request code" tool on the dataset Download Form to check you are using the correct syntax for your API request.
-WARNING:datapi.legacy_api_client:[2024-06-16T00:00:00] CDS API syntax is changed and some keys or parameter names may have also changed. To avoid requests failing, please use the "Show API request code" tool on the dataset Download Form to check you are using the correct syntax for your API request.
-INFO:atlite.datasets.era5:CDS: Downloading variables
-	surface_net_solar_radiation (2014-[1])
-	surface_solar_radiation_downwards (2014-[1])
-	toa_incident_solar_radiation (2014-[1])
-	total_sky_direct_solar_radiation_at_surface (2014-[1])
-
-INFO:multiurl.base:Downloading https://object-store.os-api.cci2.ecmwf.int:443/cci2-prod-cache-1/2025-03-17/7372185c13554a548cc02298ddef74.nc
-7372185c13554a548cc02298ddef74.nc:   0%|          | 0.00/262k [00:00<?, ?B/s]7372185c13554a548cc02298ddef74.nc: 100%|██████████| 262k/262k [00:00<00:00, 839kB/s]                                                                                    
