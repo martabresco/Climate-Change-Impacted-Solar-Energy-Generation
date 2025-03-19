@@ -18,9 +18,8 @@ def read_and_average_era5_marta(field="influx_direct"):
     # Path to the single file containing data for multiple years
     #diri = "/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/"
     #file_2013 = "europe-2013.nc"  # Update this to your actual file name
-    years=[1996, 2010, 2012, 2013]
     path="/groups/EXTREMES/cutouts/"
-    files=[f'{path}europe-{year}-era5.nc' for year in years]
+    files = [f'{path}europe-{year}-era5.nc' for year in range(1980, 2015)]
 
     # Print the generated file paths to verify correctness
     print(files)  # Check the paths generated (debugging step)
@@ -37,7 +36,7 @@ def read_and_average_sarah(field="influx_direct"):  # field is just a key to sel
     path = "/groups/EXTREMES/SARAH-3/"
     
     # List of years for which we have files (e.g., 2013)
-    years = [1996, 2010, 2012, 2013]
+    years = [1996, 2010, 2012, 2010]
     
     # Create the list of files without the influx_direct part in the file name
     files = [f'{path}europe-{year}-sarah3-era5.nc' for year in years]
@@ -49,6 +48,37 @@ def read_and_average_sarah(field="influx_direct"):  # field is just a key to sel
     df = xr.open_mfdataset(files, combine="by_coords")
     
     # Return the mean of the specified field over time
+    return df[field].mean(dim="time")
+
+
+def read_and_average_era5(field):
+    """Read a range of years of ERA5 and compute the long-term mean"""
+    
+    diri = "/groups/EXTREMES/cutouts/"
+
+    
+    files = [f'{diri}europe-{year}-era5.nc' for year in range(1980, 2015)]
+    print(files)
+    df = xr.open_mfdataset(files,concat_dim="month",
+                           combine="nested",decode_times=False)
+    
+    first_time = datetime(1980,1,15)
+    end_time = datetime(2014,12,15)
+    df = df.rename({'month':'time'})
+    df['time'] = pd.date_range(first_time,end_time,
+                               freq="1M")
+
+    return df[field].mean(dim="time")
+
+
+def read_and_average_cmip(diri,field="rsds"):
+    path = "/groups/FutureWind/"+diri
+    file = "rsds_rsdsdiff_tas"
+    
+    files = [f'{path+file}_{year}.nc' for year in range(1980, 2015)]
+    print(files)
+    df = xr.open_mfdataset(files,combine="by_coords")
+
     return df[field].mean(dim="time")
 
 
@@ -86,6 +116,42 @@ def regrid(ds_in, ds_out, method='conservative'):
     regridder = xe.Regridder(grid_in, grid_out, method, periodic=False)
     #regridder.clean_weight_file()
 
+    return regridder
+
+import numpy as np
+import xesmf as xe
+
+def regrid11(ds_in, method='conservative'):
+    """Regrid from the input dataset to a 1ºx1º grid."""
+    
+    # Get the longitude and latitude values as numpy arrays from the input dataset
+    lon = ds_in.lon.values  # Convert to numpy array
+    lat = ds_in.lat.values  # Convert to numpy array
+
+    # Define the 1ºx1º grid (target grid)
+    lon_out = np.arange(-180, 180.1, 1)  # Longitude from -180 to 180 with 1º spacing
+    lat_out = np.arange(-90, 90.1, 1)    # Latitude from -90 to 90 with 1º spacing
+
+    # Create the longitude and latitude boundaries for the output grid
+    dlon_out = lon_out[1] - lon_out[0]
+    lon_b_out = np.linspace(lon_out[0] - dlon_out/2., lon_out[-1] + dlon_out/2., len(lon_out) + 1)
+    
+    dlat_out = lat_out[1] - lat_out[0]
+    lat_b_out = np.linspace(lat_out[0] - dlat_out/2., lat_out[-1] + dlat_out/2., len(lat_out) + 1)
+
+    # Print out the grid sizes for debugging
+    print(f"Input grid: lon {lon.size}, lat {lat.size}")
+    print(f"Output grid: lon {lon_out.size}, lat {lat_out.size}")
+
+    # Set up the input grid
+    grid_in = {'lon': lon, 'lat': lat, 'lon_b': lon_b_out, 'lat_b': lat_b_out}
+    
+    # Set up the output grid (1ºx1º grid)
+    grid_out = {'lon': lon_out, 'lat': lat_out, 'lon_b': lon_b_out, 'lat_b': lat_b_out}
+
+    # Set up the regridder using xesmf (example uses the conservative regridding method)
+    regridder = xe.Regridder(grid_in, grid_out, method, periodic=False)
+    
     return regridder
 
 

@@ -7,6 +7,6 @@
 #SBATCH --exclusive=user
 #SBATCH --partition=rome,workq
 
-cd /groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3
+cd /groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/ssp585/r1i1p1f3
 
-bash /groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/wget_script_2025-3-5_14-9-56.sh -H
+bash /groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/ssp585/r1i1p1f3/wget_script_2025-3-5_16-44-17.sh -H

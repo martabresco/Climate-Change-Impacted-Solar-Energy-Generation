@@ -104,7 +104,7 @@ def make_data_set(du,rsds,rsdsdiff,tas):
 
 def main(): 
     # Folder containing the files
-    folder_path = "/groups/FutureWind/SFCRAD/ACCESS-CM2/ssp585/r1i1p1f1/" #remember to change depending on model
+    folder_path = "/groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/" #remember to change depending on model
 
     # Regex to extract the period (last two date segments)
     pattern = re.compile(r"(\d{12})-(\d{12})\.nc$")
@@ -181,7 +181,7 @@ def main():
 
             for year in unique_years:
                 # Generate the file path for the output file
-                output_file = f"/groups/FutureWind/SFCRAD/ACCESS-CM2/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_{year}.nc" #remember to change depending on model
+                output_file = f"/groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_{year}.nc" #remember to change depending on model
                 
                 # Check if the file already exists
                 if not os.path.exists(output_file):
