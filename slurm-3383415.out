@@ -1,0 +1,136 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"python/3.13.1"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "python/3.13.1"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+[(datetime.datetime(2095, 1, 1, 1, 30), datetime.datetime(2100, 12, 31, 21, 0), 'tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_209501010000-210012312100.nc', 'rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_209501010130-210012312230.nc', 'rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_209501010130-210012312230.nc'), (datetime.datetime(2075, 1, 1, 1, 30), datetime.datetime(2084, 12, 31, 21, 0), 'tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_207501010000-208412312100.nc', 'rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_207501010130-208412312230.nc', 'rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_207501010130-208412312230.nc'), (datetime.datetime(2045, 1, 1, 1, 30), datetime.datetime(2054, 12, 31, 21, 0), 'tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_204501010000-205412312100.nc', 'rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_204501010130-205412312230.nc', 'rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_204501010130-205412312230.nc'), (datetime.datetime(2035, 1, 1, 1, 30), datetime.datetime(2044, 12, 31, 21, 0), 'tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_203501010000-204412312100.nc', 'rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_203501010130-204412312230.nc', 'rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_203501010130-204412312230.nc'), (datetime.datetime(2085, 1, 1, 1, 30), datetime.datetime(2094, 12, 31, 21, 0), 'tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_208501010000-209412312100.nc', 'rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_208501010130-209412312230.nc', 'rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_208501010130-209412312230.nc'), (datetime.datetime(2065, 1, 1, 1, 30), datetime.datetime(2074, 12, 31, 21, 0), 'tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_206501010000-207412312100.nc', 'rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_206501010130-207412312230.nc', 'rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_206501010130-207412312230.nc'), (datetime.datetime(2025, 1, 1, 1, 30), datetime.datetime(2034, 12, 31, 21, 0), 'tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_202501010000-203412312100.nc', 'rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_202501010130-203412312230.nc', 'rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_202501010130-203412312230.nc'), (datetime.datetime(2015, 1, 1, 1, 30), datetime.datetime(2024, 12, 31, 21, 0), 'tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_201501010000-202412312100.nc', 'rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_201501010130-202412312230.nc', 'rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_201501010130-202412312230.nc'), (datetime.datetime(2055, 1, 1, 1, 30), datetime.datetime(2064, 12, 31, 21, 0), 'tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_205501010000-206412312100.nc', 'rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_205501010130-206412312230.nc', 'rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_205501010130-206412312230.nc')]
+Processing overlap from 2095-01-01 01:30:00 to 2100-12-31 21:00:00:
+  - TAS file: tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_209501010000-210012312100.nc
+  - RSDS file: rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_209501010130-210012312230.nc
+  - RSDSDIFF file: rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_209501010130-210012312230.nc
+Saved data for year 2095 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2095.nc
+Saved data for year 2096 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2096.nc
+Saved data for year 2097 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2097.nc
+Saved data for year 2098 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2098.nc
+Saved data for year 2099 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2099.nc
+Saved data for year 2100 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2100.nc
+Processing overlap from 2075-01-01 01:30:00 to 2084-12-31 21:00:00:
+  - TAS file: tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_207501010000-208412312100.nc
+  - RSDS file: rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_207501010130-208412312230.nc
+  - RSDSDIFF file: rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_207501010130-208412312230.nc
+Saved data for year 2075 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2075.nc
+Saved data for year 2076 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2076.nc
+Saved data for year 2077 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2077.nc
+Saved data for year 2078 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2078.nc
+Saved data for year 2079 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2079.nc
+Saved data for year 2080 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2080.nc
+Saved data for year 2081 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2081.nc
+Saved data for year 2082 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2082.nc
+Saved data for year 2083 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2083.nc
+Saved data for year 2084 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2084.nc
+Processing overlap from 2045-01-01 01:30:00 to 2054-12-31 21:00:00:
+  - TAS file: tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_204501010000-205412312100.nc
+  - RSDS file: rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_204501010130-205412312230.nc
+  - RSDSDIFF file: rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_204501010130-205412312230.nc
+Saved data for year 2045 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2045.nc
+Saved data for year 2046 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2046.nc
+Saved data for year 2047 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2047.nc
+Saved data for year 2048 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2048.nc
+Saved data for year 2049 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2049.nc
+Saved data for year 2050 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2050.nc
+Saved data for year 2051 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2051.nc
+Saved data for year 2052 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2052.nc
+Saved data for year 2053 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2053.nc
+Saved data for year 2054 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2054.nc
+Processing overlap from 2035-01-01 01:30:00 to 2044-12-31 21:00:00:
+  - TAS file: tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_203501010000-204412312100.nc
+  - RSDS file: rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_203501010130-204412312230.nc
+  - RSDSDIFF file: rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_203501010130-204412312230.nc
+Saved data for year 2035 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2035.nc
+Saved data for year 2036 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2036.nc
+Saved data for year 2037 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2037.nc
+Saved data for year 2038 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2038.nc
+Saved data for year 2039 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2039.nc
+Saved data for year 2040 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2040.nc
+Saved data for year 2041 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2041.nc
+Saved data for year 2042 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2042.nc
+Saved data for year 2043 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2043.nc
+Saved data for year 2044 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2044.nc
+Processing overlap from 2085-01-01 01:30:00 to 2094-12-31 21:00:00:
+  - TAS file: tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_208501010000-209412312100.nc
+  - RSDS file: rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_208501010130-209412312230.nc
+  - RSDSDIFF file: rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_208501010130-209412312230.nc
+Saved data for year 2085 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2085.nc
+Saved data for year 2086 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2086.nc
+Saved data for year 2087 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2087.nc
+Saved data for year 2088 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2088.nc
+Saved data for year 2089 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2089.nc
+Saved data for year 2090 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2090.nc
+Saved data for year 2091 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2091.nc
+Saved data for year 2092 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2092.nc
+Saved data for year 2093 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2093.nc
+Saved data for year 2094 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2094.nc
+Processing overlap from 2065-01-01 01:30:00 to 2074-12-31 21:00:00:
+  - TAS file: tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_206501010000-207412312100.nc
+  - RSDS file: rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_206501010130-207412312230.nc
+  - RSDSDIFF file: rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_206501010130-207412312230.nc
+Saved data for year 2065 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2065.nc
+Saved data for year 2066 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2066.nc
+Saved data for year 2067 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2067.nc
+Saved data for year 2068 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2068.nc
+Saved data for year 2069 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2069.nc
+Saved data for year 2070 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2070.nc
+Saved data for year 2071 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2071.nc
+Saved data for year 2072 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2072.nc
+Saved data for year 2073 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2073.nc
+Saved data for year 2074 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2074.nc
+Processing overlap from 2025-01-01 01:30:00 to 2034-12-31 21:00:00:
+  - TAS file: tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_202501010000-203412312100.nc
+  - RSDS file: rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_202501010130-203412312230.nc
+  - RSDSDIFF file: rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_202501010130-203412312230.nc
+Saved data for year 2025 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2025.nc
+Saved data for year 2026 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2026.nc
+Saved data for year 2027 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2027.nc
+Saved data for year 2028 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2028.nc
+Saved data for year 2029 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2029.nc
+Saved data for year 2030 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2030.nc
+Saved data for year 2031 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2031.nc
+Saved data for year 2032 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2032.nc
+Saved data for year 2033 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2033.nc
+Saved data for year 2034 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2034.nc
+Processing overlap from 2015-01-01 01:30:00 to 2024-12-31 21:00:00:
+  - TAS file: tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_201501010000-202412312100.nc
+  - RSDS file: rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_201501010130-202412312230.nc
+  - RSDSDIFF file: rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_201501010130-202412312230.nc
+Saved data for year 2015 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2015.nc
+Saved data for year 2016 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2016.nc
+Saved data for year 2017 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2017.nc
+Saved data for year 2018 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2018.nc
+Saved data for year 2019 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2019.nc
+Saved data for year 2020 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2020.nc
+Saved data for year 2021 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2021.nc
+Saved data for year 2022 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2022.nc
+Saved data for year 2023 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2023.nc
+Saved data for year 2024 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2024.nc
+Processing overlap from 2055-01-01 01:30:00 to 2064-12-31 21:00:00:
+  - TAS file: tas_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_205501010000-206412312100.nc
+  - RSDS file: rsds_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_205501010130-206412312230.nc
+  - RSDSDIFF file: rsdsdiff_3hr_MRI-ESM2-0_ssp585_r1i1p1f1_gn_205501010130-206412312230.nc
+Saved data for year 2055 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2055.nc
+Saved data for year 2056 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2056.nc
+Saved data for year 2057 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2057.nc
+Saved data for year 2058 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2058.nc
+Saved data for year 2059 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2059.nc
+Saved data for year 2060 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2060.nc
+Saved data for year 2061 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2061.nc
+Saved data for year 2062 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2062.nc
+Saved data for year 2063 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2063.nc
+Saved data for year 2064 to /groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_2064.nc
+Processing complete.
