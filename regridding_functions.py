@@ -91,6 +91,15 @@ def read_and_average_cmip_EOC(diri,field="rsds"):
 
     return df[field].mean(dim="time")
 
+def read_and_average_cmip_EOC_end(diri,field="rsds"):
+    path = "/groups/FutureWind/"+diri
+    file = "rsds_rsdsdiff_tas"
+    
+    files = [f'{path+file}_{year}.nc' for year in range(2070, 2101)]
+    print(files)
+    df = xr.open_mfdataset(files,combine="by_coords")
+
+    return df[field].mean(dim="time")
 
 
 def regrid(ds_in, ds_out, method='conservative'):
@@ -131,38 +140,6 @@ def regrid(ds_in, ds_out, method='conservative'):
 import numpy as np
 import xesmf as xe
 
-def regrid11(ds_in, method='conservative'):
-    """Regrid from the input dataset to a 1ºx1º grid."""
-    
-    # Get the longitude and latitude values as numpy arrays from the input dataset
-    lon = ds_in.lon.values  # Convert to numpy array
-    lat = ds_in.lat.values  # Convert to numpy array
-
-    # Define the 1ºx1º grid (target grid)
-    lon_out = np.arange(-180, 180.1, 1)  # Longitude from -180 to 180 with 1º spacing
-    lat_out = np.arange(-90, 90.1, 1)    # Latitude from -90 to 90 with 1º spacing
-
-    # Create the longitude and latitude boundaries for the output grid
-    dlon_out = lon_out[1] - lon_out[0]
-    lon_b_out = np.linspace(lon_out[0] - dlon_out/2., lon_out[-1] + dlon_out/2., len(lon_out) + 1)
-    
-    dlat_out = lat_out[1] - lat_out[0]
-    lat_b_out = np.linspace(lat_out[0] - dlat_out/2., lat_out[-1] + dlat_out/2., len(lat_out) + 1)
-
-    # Print out the grid sizes for debugging
-    print(f"Input grid: lon {lon.size}, lat {lat.size}")
-    print(f"Output grid: lon {lon_out.size}, lat {lat_out.size}")
-
-    # Set up the input grid
-    grid_in = {'lon': lon, 'lat': lat, 'lon_b': lon_b_out, 'lat_b': lat_b_out}
-    
-    # Set up the output grid (1ºx1º grid)
-    grid_out = {'lon': lon_out, 'lat': lat_out, 'lon_b': lon_b_out, 'lat_b': lat_b_out}
-
-    # Set up the regridder using xesmf (example uses the conservative regridding method)
-    regridder = xe.Regridder(grid_in, grid_out, method, periodic=False)
-    
-    return regridder
 
 
 
