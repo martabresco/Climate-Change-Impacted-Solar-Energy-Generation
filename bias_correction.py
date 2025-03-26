@@ -37,6 +37,16 @@ def bias_factor_era5_sarah(var):
     return bias_factor_era5_sarah
 
 def bias_factor_era5_model(var, var2, model, period, variant, bias_factor_era5_sarah, output_dir):
+    # Define the output file path
+    filename = f"bias_factor_era5_{model}_{var}.nc"
+    filepath = os.path.join(output_dir, filename)
+
+    # Check if the file already exists
+    if os.path.exists(filepath):
+        logging.info(f"File already exists: {filepath}. Skipping computation.")
+        return
+
+    # Compute bias factor if the file does not exist
     rsds_era5_mean_BOC = read_and_average_era5_marta(var)  # mean of era5 historical period for each grid cell
     rsds_model_mean_BOC = read_and_average_cmip(f'SFCRAD/{model}/{period}/{variant}/', var2)  # mean of model of historical period for each grid cell
     rsds_era5_mean_BOC = rsds_era5_mean_BOC.sel(x=slice(-12, 35), y=slice(33, 72))
@@ -74,27 +84,30 @@ def bias_factor_era5_model(var, var2, model, period, variant, bias_factor_era5_s
     )
 
     # Save to .nc file
-    filename = f"bias_factor_era5_{model}_{var}.nc"
-    filepath = os.path.join(output_dir, filename)
     ds.to_netcdf(filepath)
     logging.info(f"Saved bias factor to {filepath}")
-
 
 
 def main():
     models = ["ACCESS-CM2", "CanESM5", "CMCC-CM2-SR5", "CMCC-ESM2", "HadGEM3-GC31-LL", "HadGEM3-GC31-MM", "MRI-ESM2-0"]
     variants = ["r1i1p1f1", "r1i1p2f1", "r1i1p1f1", "r1i1p1f1", "r1i1p1f3", "r1i1p1f3", "r1i1p1f1"]
-    variables = ["influx_direct", "influx_diffuse"]
-    variables_cmip = ["rsds", "rsdsdiff"]
+    variables = ["influx_direct", "influx_diffuse", "temperature"]
+    variables_cmip = ["rsds", "rsdsdiff", "tas"]
     period = "historical"
     output_dir = "/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/"
     os.makedirs(output_dir, exist_ok=True)
     
     for var, var2 in zip(variables, variables_cmip):
-        bias_factor_era5_sarah_result = bias_factor_era5_sarah(var)
+        if var == "temperature" and var2 == "tas":
+            bias_factor_era5_sarah_result = 1  # Set bias factor to 1 for temperature
+            logging.info(f"Set bias_factor_era5_sarah_result to 1 for variable {var} and CMIP variable {var2}")
+        else:
+            bias_factor_era5_sarah_result = bias_factor_era5_sarah(var)
+        
         for model, variant in zip(models, variants):
             bias_factor_era5_model(var, var2, model, period, variant, bias_factor_era5_sarah_result, output_dir)
             logging.info(f"Computed and saved bias factor for model {model}, variable {var}")
+
 
 if __name__ == "__main__":
     main()
