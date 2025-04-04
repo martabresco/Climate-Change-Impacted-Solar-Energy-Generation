@@ -30,6 +30,56 @@ def read_and_average_era5_marta(field="influx_direct"):
     # Compute the long-term mean of the selected field over the time dimension
     return df[field].mean(dim="time")
 
+import xarray as xr
+import pandas as pd
+
+import xarray as xr
+import pandas as pd
+
+def read_and_average_era5_3h(field="influx_direct"):
+    """
+    Read ERA5 W/m² data, convert it to 3-hourly mean irradiance (aligned with model output),
+    and compute the long-term mean.
+    
+    The function follows these steps:
+    1. Converts the ERA5 data (in W/m²) to energy (J/m²) over the hourly intervals.
+    2. Sums the energy over 3-hour intervals.
+    3. Converts back from J/m² to mean irradiance (W/m²) over 3 hours.
+    4. Adjusts the timestamps to the middle of the 3-hour window (e.g., 01:30, 04:30, 07:30).
+    5. Computes the long-term mean over the time dimension.
+    """
+
+    # Path to the data and files for multiple years
+    path = "/groups/EXTREMES/cutouts/"
+    files = [f'{path}europe-{year}-era5.nc' for year in range(1980, 2015)]
+
+    # Open multiple ERA5 datasets
+    ds = xr.open_mfdataset(files, combine="by_coords", join="inner")
+    
+    # Ensure time is sorted (important for correct resampling)
+    ds = ds.sortby("time")
+
+    # Step 1: Convert from W/m² to J/m² (accumulated energy over 1 hour)
+    # ERA5 data is in W/m², so we multiply by 3600 to convert to J/m² (energy accumulated over 1 hour)
+    hourly_energy = ds[field] * 3600  # J/m²
+
+    # Step 2: Resample to 3-hourly intervals and sum the energy over these 3-hour periods
+    energy_3h = hourly_energy.resample(time="3H", label="left", closed="left").sum()
+
+    # Step 3: Convert from J/m² to W/m² (mean irradiance over the 3-hour period)
+    mean_flux_3h = energy_3h / 10800  # 3 hours * 3600 seconds = 10,800 seconds
+
+    # Step 4: Adjust the time stamps to align with model's 1:30, 4:30, 7:30, ...
+    # Add 1.5 hours (90 minutes) to shift the time to the center of each 3-hour period
+    mean_flux_3h["time"] = mean_flux_3h["time"] + pd.Timedelta(hours=1.5)
+
+    # Step 5: Compute the long-term mean over time
+    mean_flux_3h_long_term = mean_flux_3h.mean(dim="time")
+
+    return mean_flux_3h_long_term
+
+
+
 def read_and_average_era5_4y(field="influx_direct"):
     """Read a single NetCDF file containing multiple years and compute the long-term mean"""
     
