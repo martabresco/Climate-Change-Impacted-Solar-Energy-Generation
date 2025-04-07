@@ -1,0 +1,199 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"python/3.13.1"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore-cache load "python/3.13.1"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/esmpy/interface/loadESMF.py:94: VersionWarning: ESMF installation version 8.8.0, ESMPy version 8.8.0b0
+  warnings.warn("ESMF installation version {}, ESMPy version {}".format(
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xesmf/frontend.py:718: UserWarning: Using dimensions ('y', 'x') from data variable influx_direct as the horizontal dimensions for the regridding.
+  warnings.warn(
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xarray/groupers.py:487: FutureWarning: 'H' is deprecated and will be removed in a future version, please use 'h' instead.
+  self.index_grouper = pd.Grouper(
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xesmf/frontend.py:718: UserWarning: Using dimensions ('y', 'x') from data variable influx_direct as the horizontal dimensions for the regridding.
+  warnings.warn(
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xesmf/frontend.py:718: UserWarning: Using dimensions ('lat', 'lon') from data variable None as the horizontal dimensions for the regridding.
+  warnings.warn(
+INFO:root:Saved bias factor to /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_ACCESS-CM2_influx_direct.nc
+INFO:root:Computed and saved bias factor for model ACCESS-CM2, variable influx_direct
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xarray/groupers.py:487: FutureWarning: 'H' is deprecated and will be removed in a future version, please use 'h' instead.
+  self.index_grouper = pd.Grouper(
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xesmf/frontend.py:718: UserWarning: Using dimensions ('y', 'x') from data variable influx_direct as the horizontal dimensions for the regridding.
+  warnings.warn(
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xesmf/frontend.py:718: UserWarning: Using dimensions ('lat', 'lon') from data variable None as the horizontal dimensions for the regridding.
+  warnings.warn(
+INFO:root:Saved bias factor to /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_CanESM5_influx_direct.nc
+INFO:root:Computed and saved bias factor for model CanESM5, variable influx_direct
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xarray/groupers.py:487: FutureWarning: 'H' is deprecated and will be removed in a future version, please use 'h' instead.
+  self.index_grouper = pd.Grouper(
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xesmf/frontend.py:718: UserWarning: Using dimensions ('y', 'x') from data variable influx_direct as the horizontal dimensions for the regridding.
+  warnings.warn(
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xesmf/frontend.py:718: UserWarning: Using dimensions ('lat', 'lon') from data variable None as the horizontal dimensions for the regridding.
+  warnings.warn(
+INFO:root:Saved bias factor to /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_CMCC-CM2-SR5_influx_direct.nc
+INFO:root:Computed and saved bias factor for model CMCC-CM2-SR5, variable influx_direct
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xarray/groupers.py:487: FutureWarning: 'H' is deprecated and will be removed in a future version, please use 'h' instead.
+  self.index_grouper = pd.Grouper(
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xesmf/frontend.py:718: UserWarning: Using dimensions ('y', 'x') from data variable influx_direct as the horizontal dimensions for the regridding.
+  warnings.warn(
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xesmf/frontend.py:718: UserWarning: Using dimensions ('lat', 'lon') from data variable None as the horizontal dimensions for the regridding.
+  warnings.warn(
+INFO:root:Saved bias factor to /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_CMCC-ESM2_influx_direct.nc
+INFO:root:Computed and saved bias factor for model CMCC-ESM2, variable influx_direct
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xarray/groupers.py:487: FutureWarning: 'H' is deprecated and will be removed in a future version, please use 'h' instead.
+  self.index_grouper = pd.Grouper(
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xesmf/frontend.py:718: UserWarning: Using dimensions ('y', 'x') from data variable influx_direct as the horizontal dimensions for the regridding.
+  warnings.warn(
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xesmf/frontend.py:718: UserWarning: Using dimensions ('lat', 'lon') from data variable None as the horizontal dimensions for the regridding.
+  warnings.warn(
+INFO:root:Saved bias factor to /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_HadGEM3-GC31-LL_influx_direct.nc
+INFO:root:Computed and saved bias factor for model HadGEM3-GC31-LL, variable influx_direct
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xarray/groupers.py:487: FutureWarning: 'H' is deprecated and will be removed in a future version, please use 'h' instead.
+  self.index_grouper = pd.Grouper(
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xesmf/frontend.py:718: UserWarning: Using dimensions ('y', 'x') from data variable influx_direct as the horizontal dimensions for the regridding.
+  warnings.warn(
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xesmf/frontend.py:718: UserWarning: Using dimensions ('lat', 'lon') from data variable None as the horizontal dimensions for the regridding.
+  warnings.warn(
+INFO:root:Saved bias factor to /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_HadGEM3-GC31-MM_influx_direct.nc
+INFO:root:Computed and saved bias factor for model HadGEM3-GC31-MM, variable influx_direct
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xarray/groupers.py:487: FutureWarning: 'H' is deprecated and will be removed in a future version, please use 'h' instead.
+  self.index_grouper = pd.Grouper(
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xesmf/frontend.py:718: UserWarning: Using dimensions ('y', 'x') from data variable influx_direct as the horizontal dimensions for the regridding.
+  warnings.warn(
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xesmf/frontend.py:718: UserWarning: Using dimensions ('lat', 'lon') from data variable None as the horizontal dimensions for the regridding.
+  warnings.warn(
+INFO:root:Saved bias factor to /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_MRI-ESM2-0_influx_direct.nc
+INFO:root:Computed and saved bias factor for model MRI-ESM2-0, variable influx_direct
+/home/s233224/anaconda3/envs/atlite_cmip6_2025/lib/python3.13/site-packages/xesmf/frontend.py:718: UserWarning: Using dimensions ('y', 'x') from data variable influx_diffuse as the horizontal dimensions for the regridding.
+  warnings.warn(
+INFO:root:File already exists: /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_ACCESS-CM2_influx_diffuse.nc. Skipping computation.
+INFO:root:Computed and saved bias factor for model ACCESS-CM2, variable influx_diffuse
+INFO:root:File already exists: /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_CanESM5_influx_diffuse.nc. Skipping computation.
+INFO:root:Computed and saved bias factor for model CanESM5, variable influx_diffuse
+INFO:root:File already exists: /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_CMCC-CM2-SR5_influx_diffuse.nc. Skipping computation.
+INFO:root:Computed and saved bias factor for model CMCC-CM2-SR5, variable influx_diffuse
+INFO:root:File already exists: /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_CMCC-ESM2_influx_diffuse.nc. Skipping computation.
+INFO:root:Computed and saved bias factor for model CMCC-ESM2, variable influx_diffuse
+INFO:root:File already exists: /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_HadGEM3-GC31-LL_influx_diffuse.nc. Skipping computation.
+INFO:root:Computed and saved bias factor for model HadGEM3-GC31-LL, variable influx_diffuse
+INFO:root:File already exists: /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_HadGEM3-GC31-MM_influx_diffuse.nc. Skipping computation.
+INFO:root:Computed and saved bias factor for model HadGEM3-GC31-MM, variable influx_diffuse
+INFO:root:File already exists: /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_MRI-ESM2-0_influx_diffuse.nc. Skipping computation.
+INFO:root:Computed and saved bias factor for model MRI-ESM2-0, variable influx_diffuse
+INFO:root:Set bias_factor_era5_sarah_result to 1 for variable temperature and CMIP variable tas
+INFO:root:File already exists: /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_ACCESS-CM2_temperature.nc. Skipping computation.
+INFO:root:Computed and saved bias factor for model ACCESS-CM2, variable temperature
+INFO:root:File already exists: /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_CanESM5_temperature.nc. Skipping computation.
+INFO:root:Computed and saved bias factor for model CanESM5, variable temperature
+INFO:root:File already exists: /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_CMCC-CM2-SR5_temperature.nc. Skipping computation.
+INFO:root:Computed and saved bias factor for model CMCC-CM2-SR5, variable temperature
+INFO:root:File already exists: /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_CMCC-ESM2_temperature.nc. Skipping computation.
+INFO:root:Computed and saved bias factor for model CMCC-ESM2, variable temperature
+INFO:root:File already exists: /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_HadGEM3-GC31-LL_temperature.nc. Skipping computation.
+INFO:root:Computed and saved bias factor for model HadGEM3-GC31-LL, variable temperature
+INFO:root:File already exists: /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_HadGEM3-GC31-MM_temperature.nc. Skipping computation.
+INFO:root:Computed and saved bias factor for model HadGEM3-GC31-MM, variable temperature
+INFO:root:File already exists: /work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/bias_factor_era5_MRI-ESM2-0_temperature.nc. Skipping computation.
+INFO:root:Computed and saved bias factor for model MRI-ESM2-0, variable temperature
+['/groups/EXTREMES/cutouts/europe-1996-era5.nc', '/groups/EXTREMES/cutouts/europe-2010-era5.nc', '/groups/EXTREMES/cutouts/europe-2012-era5.nc', '/groups/EXTREMES/cutouts/europe-2010-era5.nc']
+['/groups/EXTREMES/SARAH-3/europe-1996-sarah3-era5.nc', '/groups/EXTREMES/SARAH-3/europe-2010-sarah3-era5.nc', '/groups/EXTREMES/SARAH-3/europe-2012-sarah3-era5.nc', '/groups/EXTREMES/SARAH-3/europe-2010-sarah3-era5.nc']
+189 190
+157 158
+157 158
+131 132
+['/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1980.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1981.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1982.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1983.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1984.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1985.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1986.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1987.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1988.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1989.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1990.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1991.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1992.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1993.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1994.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1995.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1996.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1997.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1998.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1999.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2000.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2001.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2002.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2003.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2004.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2005.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2006.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2007.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2008.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2009.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2010.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2011.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2012.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2013.nc', '/groups/FutureWind/SFCRAD/ACCESS-CM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2014.nc']
+189 190
+157 158
+157 158
+131 132
+157 158
+131 132
+25 26
+32 33
+Shape of bias_factor_era5_model: (32, 25)
+Shape of rsds_model_mean_BOC.lat: 32
+Shape of rsds_model_mean_BOC.lon: 25
+['/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1980.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1981.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1982.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1983.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1984.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1985.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1986.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1987.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1988.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1989.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1990.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1991.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1992.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1993.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1994.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1995.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1996.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1997.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1998.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_1999.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_2000.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_2001.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_2002.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_2003.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_2004.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_2005.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_2006.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_2007.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_2008.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_2009.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_2010.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_2011.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_2012.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_2013.nc', '/groups/FutureWind/SFCRAD/CanESM5/historical/r1i1p2f1/rsds_rsdsdiff_tas_2014.nc']
+189 190
+157 158
+157 158
+131 132
+157 158
+131 132
+17 18
+14 15
+Shape of bias_factor_era5_model: (14, 17)
+Shape of rsds_model_mean_BOC.lat: 14
+Shape of rsds_model_mean_BOC.lon: 17
+['/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1980.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1981.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1982.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1983.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1984.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1985.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1986.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1987.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1988.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1989.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1990.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1991.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1992.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1993.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1994.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1995.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1996.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1997.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1998.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_1999.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_2000.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_2001.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_2002.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_2003.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_2004.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_2005.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_2006.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_2007.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_2008.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_2009.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_2010.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_2011.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_2012.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_2013.nc', '/groups/FutureWind/SFCRAD/CMCC-CM2-SR5/historical/r1i1p1f1/rsds_rsdsdiff_tas_2014.nc']
+189 190
+157 158
+157 158
+131 132
+157 158
+131 132
+38 39
+41 42
+Shape of bias_factor_era5_model: (41, 38)
+Shape of rsds_model_mean_BOC.lat: 41
+Shape of rsds_model_mean_BOC.lon: 38
+['/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1980.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1981.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1982.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1983.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1984.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1985.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1986.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1987.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1988.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1989.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1990.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1991.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1992.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1993.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1994.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1995.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1996.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1997.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1998.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_1999.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2000.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2001.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2002.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2003.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2004.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2005.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2006.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2007.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2008.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2009.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2010.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2011.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2012.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2013.nc', '/groups/FutureWind/SFCRAD/CMCC-ESM2/historical/r1i1p1f1/rsds_rsdsdiff_tas_2014.nc']
+189 190
+157 158
+157 158
+131 132
+157 158
+131 132
+38 39
+41 42
+Shape of bias_factor_era5_model: (41, 38)
+Shape of rsds_model_mean_BOC.lat: 41
+Shape of rsds_model_mean_BOC.lon: 38
+['/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1980.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1981.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1982.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1983.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1984.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1985.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1986.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1987.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1988.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1989.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1990.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1991.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1992.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1993.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1994.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1995.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1996.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1997.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1998.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_1999.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_2000.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_2001.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_2002.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_2003.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_2004.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_2005.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_2006.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_2007.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_2008.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_2009.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_2010.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_2011.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_2012.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_2013.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-LL/historical/r1i1p1f3/rsds_rsdsdiff_tas_2014.nc']
+189 190
+157 158
+157 158
+131 132
+157 158
+131 132
+25 26
+32 33
+Shape of bias_factor_era5_model: (32, 25)
+Shape of rsds_model_mean_BOC.lat: 32
+Shape of rsds_model_mean_BOC.lon: 25
+['/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1980.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1981.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1982.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1983.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1984.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1985.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1986.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1987.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1988.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1989.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1990.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1991.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1992.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1993.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1994.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1995.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1996.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1997.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1998.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_1999.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_2000.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_2001.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_2002.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_2003.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_2004.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_2005.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_2006.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_2007.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_2008.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_2009.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_2010.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_2011.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_2012.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_2013.nc', '/groups/FutureWind/SFCRAD/HadGEM3-GC31-MM/historical/r1i1p1f3/rsds_rsdsdiff_tas_2014.nc']
+189 190
+157 158
+157 158
+131 132
+157 158
+131 132
+56 57
+71 72
+Shape of bias_factor_era5_model: (71, 56)
+Shape of rsds_model_mean_BOC.lat: 71
+Shape of rsds_model_mean_BOC.lon: 56
+['/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1980.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1981.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1982.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1983.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1984.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1985.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1986.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1987.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1988.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1989.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1990.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1991.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1992.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1993.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1994.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1995.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1996.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1997.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1998.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_1999.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_2000.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_2001.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_2002.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_2003.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_2004.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_2005.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_2006.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_2007.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_2008.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_2009.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_2010.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_2011.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_2012.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_2013.nc', '/groups/FutureWind/SFCRAD/MRI-ESM2-0/historical/r1i1p1f1/rsds_rsdsdiff_tas_2014.nc']
+189 190
+157 158
+157 158
+131 132
+157 158
+131 132
+42 43
+35 36
+Shape of bias_factor_era5_model: (35, 42)
+Shape of rsds_model_mean_BOC.lat: 35
+Shape of rsds_model_mean_BOC.lon: 42
+['/groups/EXTREMES/cutouts/europe-1996-era5.nc', '/groups/EXTREMES/cutouts/europe-2010-era5.nc', '/groups/EXTREMES/cutouts/europe-2012-era5.nc', '/groups/EXTREMES/cutouts/europe-2010-era5.nc']
+['/groups/EXTREMES/SARAH-3/europe-1996-sarah3-era5.nc', '/groups/EXTREMES/SARAH-3/europe-2010-sarah3-era5.nc', '/groups/EXTREMES/SARAH-3/europe-2012-sarah3-era5.nc', '/groups/EXTREMES/SARAH-3/europe-2010-sarah3-era5.nc']
+189 190
+157 158
+157 158
+131 132

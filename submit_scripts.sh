@@ -8,4 +8,4 @@
 #SBATCH --partition=rome,workq
 
 module load python/3.13.1            # Load the Python module (adjust based on your HPC environment)
-python script_cutout.py                 # Execute your Python script
+python bias_correction.py                 # Execute your Python script
