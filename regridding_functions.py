@@ -48,11 +48,8 @@ def read_and_average_era5_3h(field="influx_direct"):
     
     # Ensure time is sorted (important for correct resampling)
     ds = ds.sortby("time")
-    irradiance_3h_accumulated = (
-    ds[field]  # Access the field
-    .resample(time="3H", label="left", closed="right")  # Resample to 3-hour periods
-    .map(lambda x: (x * 3600).sum(dim="time") / (3 * 3600))  # Convert to energy, sum, and average back to irradiance
-)
+    irradiance_3h_accumulated = (ds[field].resample(time="3H", label="left", closed="right").sum())
+
 
     irradiance_3h_accumulated["time"] = irradiance_3h_accumulated["time"] + pd.Timedelta(hours=1.5)
 

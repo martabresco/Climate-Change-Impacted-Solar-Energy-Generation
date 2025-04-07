@@ -2,7 +2,8 @@ import xarray as xr
 import numpy as np
 import logging 
 logging.basicConfig(level=logging.INFO)
-import xesmf as xe
+#import xesmf as xe
+from regridding_functions import read_and_average_era5_3h
 from regridding_functions import read_and_average_era5_4y
 from regridding_functions import read_and_average_sarah
 from regridding_functions import regrid
@@ -47,7 +48,8 @@ def bias_factor_era5_model(var, var2, model, period, variant, bias_factor_era5_s
         return
 
     # Compute bias factor if the file does not exist
-    rsds_era5_mean_BOC = read_and_average_era5_marta(var)  # mean of era5 historical period for each grid cell
+    #use the 3h function
+    rsds_era5_mean_BOC = read_and_average_era5_3h(var)  # mean of era5 historical period for each grid cell
     rsds_model_mean_BOC = read_and_average_cmip(f'SFCRAD/{model}/{period}/{variant}/', var2)  # mean of model of historical period for each grid cell
     rsds_era5_mean_BOC = rsds_era5_mean_BOC.sel(x=slice(-12, 35), y=slice(33, 72))
     rsds_model_mean_BOC = rsds_model_mean_BOC.sel(lon=slice(-12, 35), lat=slice(33, 72))
