@@ -3,7 +3,6 @@ import numpy as np
 import logging 
 logging.basicConfig(level=logging.INFO)
 #import xesmf as xe
-from regridding_functions import read_and_average_era5_3h
 from regridding_functions import read_and_average_era5_4y
 from regridding_functions import read_and_average_sarah
 from regridding_functions import regrid
@@ -25,8 +24,8 @@ def bias_factor_era5_sarah(var):
     #calculates the bias factor between era5 and sarah for the variable var, for now only 4 years data
     rsds_era5_mean_4y= read_and_average_era5_4y(var) #read and av the 4 years of era5 for bias correction with sarah
     rsds_sarah_mean= read_and_average_sarah(var) #same for sarah
-    rsds_era5_mean_cut=rsds_era5_mean_4y.sel(x=slice(-12, 35), y=slice(33, 72)) #cut to the max latitude covered by sarah
-    rsds_sarah_mean_cut=rsds_sarah_mean.sel(x=slice(-12, 35), y=slice(33, 72))
+    rsds_era5_mean_cut=rsds_era5_mean_4y.sel(x=slice(-12, 35), y=slice(33, 64.8)) #cut to the max latitude covered by sarah
+    rsds_sarah_mean_cut=rsds_sarah_mean.sel(x=slice(-12, 35), y=slice(33, 64.8))
     regridder=regrid(rsds_era5_mean_cut, rsds_sarah_mean_cut, method='conservative')  #regrid era5 (0.25x0.25) to the sarah grid (0.3x0.3)
     rsds_era5_mean_interp_cut_4y=regridder(rsds_era5_mean_cut)
     denominator_era5_sarah= rsds_era5_mean_interp_cut_4y.values  # ERA5 dataset
@@ -34,60 +33,95 @@ def bias_factor_era5_sarah(var):
     # Ensure valid bias factor calculation
     mask_valid = (denominator_era5_sarah != 0) & (numerator_era5_sarah != 0) # Avoid division by zero and all values in sarah that have mean 0
     bias_factor_era5_sarah = np.where(mask_valid, numerator_era5_sarah / denominator_era5_sarah, np.nan)  # Replace invalid cases with NaN
-    bias_factor_era5_sarah = fill_nans_with_last_valid(bias_factor_era5_sarah)  # Fill NaNs downward
+    #bias_factor_era5_sarah = fill_nans_with_last_valid(bias_factor_era5_sarah)  # Fill NaNs downward
+    print(f"Shape of bias_factor_era5_sarah: {bias_factor_era5_sarah.shape}")
     return bias_factor_era5_sarah
 
-def bias_factor_era5_model(var, var2, model, period, variant, bias_factor_era5_sarah, output_dir):
-    # Define the output file path
+def bias_factor_era5_model(var, var2, model, period, variant, bias_factor_era5_sarah, bias_factor_era5_sarah_rsdsdiff,output_dir):
+    # Define the output file paths
     filename = f"bias_factor_era5_{model}_{var}.nc"
     filepath = os.path.join(output_dir, filename)
+    filename_total = os.path.join(output_dir, f"bias_factor_era5_{model}_total.nc")
 
-    # Check if the file already exists
-    if os.path.exists(filepath):
-        logging.info(f"File already exists: {filepath}. Skipping computation.")
-        return
-
-    # Compute bias factor if the file does not exist
-    #use the 3h function
-    rsds_era5_mean_BOC = read_and_average_era5_3h(var)  # mean of era5 historical period for each grid cell
+    # Compute the required variables for total bias factor calculation
+    rsds_era5_mean_BOC = read_and_average_era5_marta(var)  # mean of era5 historical period for each grid cell
     rsds_model_mean_BOC = read_and_average_cmip(f'SFCRAD/{model}/{period}/{variant}/', var2)  # mean of model of historical period for each grid cell
-    rsds_era5_mean_BOC = rsds_era5_mean_BOC.sel(x=slice(-12, 35), y=slice(33, 72))
-    rsds_model_mean_BOC = rsds_model_mean_BOC.sel(lon=slice(-12, 35), lat=slice(33, 72))
+    rsdsdiff_model_mean_BOC = read_and_average_cmip(f'SFCRAD/{model}/{period}/{variant}/', "rsdsdiff") 
+    rsdsdiff_era5_mean_BOC = read_and_average_era5_marta("influx_diffuse") 
+
+    rsds_era5_mean_BOC = rsds_era5_mean_BOC.sel(x=slice(-12, 35), y=slice(33, 64.8))
+    rsds_model_mean_BOC = rsds_model_mean_BOC.sel(lon=slice(-12, 35), lat=slice(33, 64.8))
+    rsdsdiff_model_mean_BOC = rsdsdiff_model_mean_BOC.sel(lon=slice(-12, 35), lat=slice(33, 64.8))
+    rsdsdiff_era5_mean_BOC= rsdsdiff_era5_mean_BOC.sel(x=slice(-12, 35), y=slice(33, 64.8))
+
     ds_03 = xr.open_dataset('europe_03.nc')  # grid 0.3x0.3
     regridder_era5 = regrid(rsds_era5_mean_BOC, ds_03, method='conservative')  # regrid era5 to the 0.3x0.3º grid
     rsds_era5_03 = regridder_era5(rsds_era5_mean_BOC)  # regridded historical mean from era5 to 0.3x0.3º grid
-    rsds_era5_correct = rsds_era5_03.sel(lon=slice(-12, 35), lat=slice(33, 72)) * bias_factor_era5_sarah  # apply bias factor to era5 rsds
-    regridder_era503_model = regrid(rsds_era5_correct, rsds_model_mean_BOC, method='conservative')  # regrid corrected era5 to the model grid
-    rsds_era5_correct_model = regridder_era503_model(rsds_era5_correct)  # regrid corrected era5 to the model grid
-    rsds_era5_correct_model = rsds_era5_correct_model.sel(lon=slice(-12, 35), lat=slice(33, 72))
-    numerator_era5_model = rsds_era5_correct_model.values
-    denominator_era5_model = rsds_model_mean_BOC.values
+    rsdsdiff_era5_03 = regridder_era5(rsdsdiff_era5_mean_BOC) 
+    rsds_era5_correct = rsds_era5_03.sel(lon=slice(-12, 35), lat=slice(33, 64.8)) * bias_factor_era5_sarah  # apply bias factor to era5 rsds
+    rsdsdiff_era5_correct = rsdsdiff_era5_03.sel(lon=slice(-12, 35), lat=slice(33, 64.8)) * bias_factor_era5_sarah_rsdsdiff  # apply bias factor to era5 rsdsdiff
+    regridder_era503_model_direct = regrid(rsds_era5_correct, rsds_model_mean_BOC, method='conservative')  # regrid corrected era5 to the model grid
+    regridder_era503_model_diffuse = regrid(rsdsdiff_era5_correct, rsds_model_mean_BOC, method='conservative')  # regrid corrected era5 to the model grid
+    rsds_era5_correct_model = regridder_era503_model_direct(rsds_era5_correct)  # regrid corrected era5 to the model grid
+    rsdsdiff_era5_correct_model = regridder_era503_model_diffuse(rsdsdiff_era5_correct)  # regrid corrected era5 to the model grid
 
-    # Ensure valid bias factor calculation
-    mask_valid_2 = (denominator_era5_model != 0) & (numerator_era5_model != 0)  # Avoid values 0
-    bias_factor_era5_model = np.where(mask_valid_2, numerator_era5_model / denominator_era5_model, np.nan)  # Replace invalid cases with NaN
+    # Check if the individual bias factor file already exists
+    if not os.path.exists(filepath):
+        if var == "influx_direct":
+            numerator_era5_model = rsds_era5_correct_model.values
+            denominator_era5_model = rsds_model_mean_BOC.values - rsdsdiff_model_mean_BOC.values  # subtract diffuse from direct radiation
+            #do the calculation of the total bias factor inside and only when I am in influx direct
+            total_numerator_era5_model = rsds_era5_correct_model.values + rsdsdiff_era5_correct_model.values
+            total_denominator_era5_model = rsds_model_mean_BOC.values
+            mask_valid_3 = (total_numerator_era5_model != 0) & (total_denominator_era5_model != 0)  # Avoid values 0
+            total_bias_factor_era5_model = np.where(mask_valid_3, total_numerator_era5_model / total_denominator_era5_model, np.nan)  # Replace invalid cases with NaN
+                # Convert to xarray dataset
+            ds2 = xr.Dataset(
+                {"bias_factor": (["lat", "lon"], total_bias_factor_era5_model)},
+                coords={
+                "lat": rsds_model_mean_BOC.lat,
+                "lon": rsds_model_mean_BOC.lon,
+                },
+            )
 
-    # Print shapes for debugging
-    print(f"Shape of bias_factor_era5_model: {bias_factor_era5_model.shape}")
-    print(f"Shape of rsds_model_mean_BOC.lat: {len(rsds_model_mean_BOC.lat)}")
-    print(f"Shape of rsds_model_mean_BOC.lon: {len(rsds_model_mean_BOC.lon)}")
+            # Save the total bias factor to .nc file
+            ds2.to_netcdf(filename_total)
+            logging.info(f"Saved total bias factor to {filename_total}")
 
-    # Ensure the shape of bias_factor_era5_model matches lat and lon dimensions
-    if bias_factor_era5_model.shape != (len(rsds_model_mean_BOC.lat), len(rsds_model_mean_BOC.lon)):
-        raise ValueError("Shape of bias_factor_era5_model does not match lat/lon dimensions of rsds_model_mean_BOC")
+        if var == "influx_diffuse":
+            numerator_era5_model = rsdsdiff_era5_correct_model.values
+            denominator_era5_model = rsdsdiff_model_mean_BOC.values
+        if var == "temperature":
+            numerator_era5_model = rsds_era5_correct_model.values
+            denominator_era5_model = rsds_model_mean_BOC.values
 
-    # Convert to xarray dataset
-    ds = xr.Dataset(
-        {"bias_factor": (["lat", "lon"], bias_factor_era5_model)},
-        coords={
-            "lat": rsds_model_mean_BOC.lat,
-            "lon": rsds_model_mean_BOC.lon,
-        },
-    )
+        # Ensure valid bias factor calculation
+        mask_valid_2 = (denominator_era5_model != 0) & (numerator_era5_model != 0)  # Avoid values 0
+        bias_factor_era5_model = np.where(mask_valid_2, numerator_era5_model / denominator_era5_model, np.nan)  # Replace invalid cases with NaN
 
-    # Save to .nc file
-    ds.to_netcdf(filepath)
-    logging.info(f"Saved bias factor to {filepath}")
+
+
+        # Ensure the shape of bias_factor_era5_model matches lat and lon dimensions
+        if bias_factor_era5_model.shape != (len(rsds_model_mean_BOC.lat), len(rsds_model_mean_BOC.lon)):
+            raise ValueError("Shape of bias_factor_era5_model does not match lat/lon dimensions of rsds_model_mean_BOC")
+
+        # Convert to xarray dataset
+        ds = xr.Dataset(
+            {"bias_factor": (["lat", "lon"], bias_factor_era5_model)},
+            coords={
+                "lat": rsds_model_mean_BOC.lat,
+                "lon": rsds_model_mean_BOC.lon,
+            },
+        )
+
+        # Save to .nc file
+        ds.to_netcdf(filepath)
+        logging.info(f"Saved individual bias factor to {filepath}")
+
+
+
+
+
 
 
 def main():
@@ -98,6 +132,7 @@ def main():
     period = "historical"
     output_dir = "/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/"
     os.makedirs(output_dir, exist_ok=True)
+
     
     for var, var2 in zip(variables, variables_cmip):
         if var == "temperature" and var2 == "tas":
@@ -105,9 +140,10 @@ def main():
             logging.info(f"Set bias_factor_era5_sarah_result to 1 for variable {var} and CMIP variable {var2}")
         else:
             bias_factor_era5_sarah_result = bias_factor_era5_sarah(var)
+            bias_factor_era5_sarah_rsdsdiff=bias_factor_era5_sarah('influx_diffuse')
         
         for model, variant in zip(models, variants):
-            bias_factor_era5_model(var, var2, model, period, variant, bias_factor_era5_sarah_result, output_dir)
+            bias_factor_era5_model(var, var2, model, period, variant, bias_factor_era5_sarah_result, bias_factor_era5_sarah_rsdsdiff, output_dir)
             logging.info(f"Computed and saved bias factor for model {model}, variable {var}")
 
 
