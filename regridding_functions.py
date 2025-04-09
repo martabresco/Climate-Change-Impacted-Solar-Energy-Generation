@@ -67,7 +67,7 @@ def read_and_average_era5_4y(field="influx_direct"):
     #diri = "/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/"
     #file_2013 = "europe-2013.nc"  # Update this to your actual file name
     path="/groups/EXTREMES/cutouts/"
-    years = [1996, 2010, 2012, 2010]
+    years = [1996, 2010, 2012, 2013]
     files = [f'{path}europe-{year}-era5.nc' for year in years]
 
     # Print the generated file paths to verify correctness
@@ -85,7 +85,7 @@ def read_and_average_sarah(field="influx_direct"):  # field is just a key to sel
     path = "/groups/EXTREMES/SARAH-3/"
     
     # List of years for which we have files (e.g., 2013)
-    years = [1996, 2010, 2012, 2010]
+    years = [1996, 2010, 2012, 2013]
     
     # Create the list of files without the influx_direct part in the file name
     files = [f'{path}europe-{year}-sarah3-era5.nc' for year in years]
