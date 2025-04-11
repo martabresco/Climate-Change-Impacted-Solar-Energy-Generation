@@ -75,7 +75,8 @@ def bias_factor_era5_model(model, period, variant, direct_bias_factor_era5_sarah
     regridder_era503_model_diffuse = regrid(rsdsdiff_era5_correct, rsds_model_mean_BOC, method='conservative')  # regrid corrected era5 to the model grid
     rsds_era5_correct_model = regridder_era503_model_direct(rsds_era5_correct)  # regrid corrected era5 to the model grid
     rsdsdiff_era5_correct_model = regridder_era503_model_diffuse(rsdsdiff_era5_correct)  # regrid corrected era5 to the model grid
-    temp_era5_correct_model=regrid(temp_era5_mean_BOC, temp_model_mean_BOC, method='conservative')  # regrid era5 to the model grid
+    regridder_era5_model_temp=regrid(temp_era5_mean_BOC, temp_model_mean_BOC, method='conservative')  # regrid era5 to the model grid
+    temp_era5_correct_model=regridder_era5_model_temp(temp_era5_mean_BOC)  # regrid corrected era5 to the model grid
 
 # Calculate and save total bias factor if missing
     if not os.path.exists(filepath_total):
@@ -144,14 +145,7 @@ def bias_factor_era5_model(model, period, variant, direct_bias_factor_era5_sarah
         )
         ds_temp.to_netcdf(filepath_temp)
         logging.info(f"Saved temperature bias factor to {filepath_temp}")
-        # Ensure the shape of bias_factor_era5_model matches lat and lon dimensions
-        if direct_bias_factor_era5_model.shape != (len(rsds_model_mean_BOC.lat), len(rsds_model_mean_BOC.lon)):
-            raise ValueError("Shape of bias_factor_era5_model does not match lat/lon dimensions of rsds_model_mean_BOC")
-        
-        # Ensure the shape of bias_factor_era5_model matches lat and lon dimensions
-        if diffuse_bias_factor_era5_model.shape != (len(rsdsdiff_model_mean_BOC.lat), len(rsdsdiff_model_mean_BOC.lon)):
-            raise ValueError("Shape of bias_factor_era5_model does not match lat/lon dimensions of rsds_model_mean_BOC")
-
+    
 def main():
     models = ["ACCESS-CM2", "CanESM5", "CMCC-CM2-SR5", "CMCC-ESM2", "HadGEM3-GC31-LL", "HadGEM3-GC31-MM", "MRI-ESM2-0"]
     variants = ["r1i1p1f1", "r1i1p2f1", "r1i1p1f1", "r1i1p1f1", "r1i1p1f3", "r1i1p1f3", "r1i1p1f1"]
