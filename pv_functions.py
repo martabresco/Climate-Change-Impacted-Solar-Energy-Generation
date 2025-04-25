@@ -290,6 +290,10 @@ def SurfaceOrientation(ds, solar_position, orientation, tracking=None):
         }
     )
 
+# SPDX-FileCopyrightText: Contributors to atlite <https://github.com/pypsa/atlite>
+#
+# SPDX-License-Identifier: MIT
+
 import logging
 
 import numpy as np
@@ -431,6 +435,7 @@ def TiltedGroundIrrad(ds, solar_position, surface_orientation, influx, mean_albe
 
 def TiltedIrradiation(
     ds,
+    mean_albedo,
     solar_position,
     surface_orientation,
     trigon_model,
@@ -478,8 +483,6 @@ def TiltedIrradiation(
 
     """
     influx_toa = ds["rsds"] #definin influx_toa as rsds from model. 
-    influx_direct=ds['rsds']-ds['rsdsdiff']
-    influx_diffuse=ds['rsdsdiff']
 
     def clip(influx, influx_max):
         # use .data in clip due to dask-xarray incompatibilities
@@ -644,3 +647,19 @@ panel = {
     # Inverter efficiency
     "inverter_efficiency": 0.9
 }
+import os
+def albedo_for_model(models, variants):
+    mean_albedo_era5 = read_and_average_era5_marta("albedo")
+    output_dir = "/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/albedo/"
+    os.makedirs(output_dir, exist_ok=True)
+    for model, variant in zip(models, variants):
+        try:
+            filepath = f"/groups/FutureWind/SFCRAD/{model}/historical/{variant}/rsds_rsdsdiff_tas_2010.nc"
+            ds_model = xr.open_dataset(filepath, engine="netcdf4")  # Explicitly specify the engine
+            regridder_model = regrid(mean_albedo_era5, ds_model)
+            albedo_model = regridder_model(mean_albedo_era5)
+            output_path = os.path.join(output_dir, f"mean_albedo_grid_{model}.nc")
+            albedo_model.to_netcdf(output_path)
+            print(f"Saved regridded mean albedo for {model} to {output_path}")
+        except Exception as e:
+            print(f"Failed for model {model}: {e}")
