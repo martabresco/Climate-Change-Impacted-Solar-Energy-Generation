@@ -102,35 +102,40 @@ def is_leap_year(year):
         bool: True if the year is a leap year, False otherwise.
     """
     return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+import xarray as xr
+import numpy as np
+import pandas as pd
+
 def add_february_29(ds, year):
     """
-    Add February 29 to a dataset for leap years by duplicating February 28.
-
-    Parameters:
-        ds (xarray.Dataset): The dataset with a noleap calendar.
-        year (int): The year being processed.
-
-    Returns:
-        xarray.Dataset: The dataset with February 29 added for leap years.
+    Add February 29 to a dataset with a noleap calendar by duplicating February 28.
+    Ensures the time axis is in datetime64[ns] format.
     """
     if is_leap_year(year):
-        # Ensure the time coordinate is properly decoded
-        if not np.issubdtype(ds["time"].dtype, np.datetime64):
-            raise ValueError("The time coordinate must be in datetime64[ns] format.")
+        # 🛠 If time coordinate is not datetime64, convert it manually
+        if not np.issubdtype(ds['time'].dtype, np.datetime64):
+            try:
+                # Force decode using cftime (common for noleap calendars)
+                times = xr.cftime_range(start=f"{year}-01-01", periods=ds.sizes['time'], calendar='noleap')
+                ds['time'] = pd.to_datetime(times.to_datetimeindex())
+            except Exception as e:
+                raise ValueError(f"Failed to convert time to datetime64: {e}")
+
+        # ✅ Now safe to work with time
 
         # Select February 28
-        feb_28 = ds.sel(time=(ds["time"].dt.month == 2) & (ds["time"].dt.day == 28))
-        if feb_28.time.size > 0:  # Ensure February 28 exists
-            # Duplicate February 28 and assign it to February 29
-            feb_29 = feb_28.copy(deep=True)
+        feb_28_idx = np.where((ds['time'].dt.month == 2) & (ds['time'].dt.day == 28))[0]
+        if feb_28_idx.size > 0:
+            feb_28 = ds.isel(time=feb_28_idx[0])
+            feb_29 = feb_28.expand_dims('time')  # Expand back to have a 'time' dimension
             feb_29 = feb_29.assign_coords(time=[pd.Timestamp(f"{year}-02-29")])
-            # Concatenate February 29 to the dataset
             ds = xr.concat([ds, feb_29], dim="time")
-            # Sort by time to maintain chronological order
-            ds = ds.sortby("time")
+            ds = ds.sortby('time')
         else:
-            print(f"Warning: February 28 not found in dataset for year {year}.")
+            print(f"Warning: February 28 not found for year {year}")
+
     return ds
+
    
 
 def power_calculation(files, orientation1, trigon_model, clearsky_model, tracking, panel, output_dir):
@@ -169,16 +174,15 @@ def power_calculation(files, orientation1, trigon_model, clearsky_model, trackin
                     year = int(re.search(r"(\d{4})", file_name).group(1))
                     
                     # Open the file
-                    ds = xr.open_dataset(file_path, engine="netcdf4", decode_times=False)
+                    #for H models and gregorian: 
+                    #ds = xr.open_dataset(file_path, engine="netcdf4", decode_times=False)
+                    ds = xr.open_dataset(file_path, engine="netcdf4", decode_times=True)
                     print('File opened')
 
                     # Transform the time coordinate for HadGEM models
                     if model in ["HadGEM3-GC31-LL", "HadGEM3-GC31-MM"]:
                         ds = transform_to_gregorian(ds, year)
                     elif model in ["CanESM5", "CMCC-CM2-SR5", "CMCC-ESM2"]:
-                        # Decode time normally for noleap models
-                        ds = xr.decode_cf(ds)
-                        # Add February 29 for leap years
                         ds = add_february_29(ds, year)
                     else:
                         # Decode time normally for other models

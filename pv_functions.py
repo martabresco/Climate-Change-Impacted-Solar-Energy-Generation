@@ -46,16 +46,44 @@ mean_albedo=regridder_era5_model(mean_albedo_Era5) #regrid the mean albedo to th
 
 
 def SolarPosition(ds, time_shift="0H"):
+    """
+    Calculate solar position (altitude and azimuth) based on the dataset's time and coordinates.
 
-    # up to h and dec from [1]
+    Parameters:
+        ds (xarray.Dataset): The dataset containing time, latitude, and longitude.
+        time_shift (str): Time shift to apply (e.g., "+30min").
 
+    Returns:
+        xarray.Dataset: A dataset containing solar altitude and azimuth.
+    """
+    """
+    Removed this when I had the error with the C-models. But this worked for the H models
     time_shift = pd.to_timedelta(time_shift)
-    #for the models: 
-    t = ds.indexes["time"]#.to_datetimeindex()
+
+    # Handle CFTimeIndex or DatetimeIndex
+    t = ds.indexes["time"]
+    if isinstance(ds.indexes["time"], xr.cftimeindex.CFTimeIndex):
+        t = ds.indexes["time"].to_datetimeindex()
+    else:
+        t = pd.to_datetime(ds.indexes["time"])
+    """
+    time_shift = pd.to_timedelta(time_shift)
+
+    # Always safely convert time
+    t = ds.indexes["time"]
+    if hasattr(t, "to_datetimeindex"):
+        t = t.to_datetimeindex()
+    else:
+        t = pd.to_datetime(t)
+  # Convert CFTimeIndex to DatetimeIndex
     t = t + time_shift
-    #for the era5
-    #t=ds.indexes["time"] + time_shift
-    n = xr.DataArray(t.to_julian_date(), coords=ds["time"].coords) - 2451545.0
+    
+
+    # Convert time to Julian date
+    julian_date = t.to_julian_date()
+    n = xr.DataArray(julian_date, coords=ds["time"].coords) - 2451545.0
+
+    # Extract hour and minute
     hour = (ds["time"] + time_shift).dt.hour
     minute = (ds["time"] + time_shift).dt.minute
 
@@ -67,23 +95,20 @@ def SolarPosition(ds, time_shift="0H"):
     hour = hour.chunk(chunks)
     minute = minute.chunk(chunks)
 
+    # Solar position calculations
     L = 280.460 + 0.9856474 * n  # mean longitude (deg)
     g = radians(357.528 + 0.9856003 * n)  # mean anomaly (rad)
     l = radians(L + 1.915 * sin(g) + 0.020 * sin(2 * g))  # ecliptic long. (rad)
     ep = radians(23.439 - 4e-7 * n)  # obliquity of the ecliptic (rad)
 
-    ra = arctan2(cos(ep) * sin(l), cos(l))  # right ascencion (rad)
-    lmst = (6.697375 + (hour + minute / 60.0) + 0.0657098242 * n) * 15.0 + ds[
-        "lon"
-    ]  # local mean sidereal time (deg)
+    ra = arctan2(cos(ep) * sin(l), cos(l))  # right ascension (rad)
+    lmst = (6.697375 + (hour + minute / 60.0) + 0.0657098242 * n) * 15.0 + ds["lon"]
     h = (radians(lmst) - ra + pi) % (2 * pi) - pi  # hour angle (rad)
 
     dec = arcsin(sin(ep) * sin(l))  # declination (rad)
 
-    # alt and az from [2]
+    # Altitude and azimuth calculations
     lat = radians(ds["lat"])
-    # Clip before arcsin to prevent values < -1. from rounding errors; can
-    # cause NaNs later
     alt = arcsin(
         (sin(dec) * sin(lat) + cos(dec) * cos(lat) * cos(h)).clip(min=-1.0, max=1.0)
     ).rename("altitude")
