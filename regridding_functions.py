@@ -130,7 +130,7 @@ def read_and_average_cmip(diri,field="rsds"):
 
     return df[field].mean(dim="time")
 
-def read_and_average_cmip_EOC(diri,field="rsds"):
+def read_and_average_cmip_power_EOC(diri,field="specific generation"):
     path = "/groups/FutureWind/"+diri
     file = "rsds_rsdsdiff_tas"
     
@@ -140,15 +140,16 @@ def read_and_average_cmip_EOC(diri,field="rsds"):
 
     return df[field].mean(dim="time")
 
-def read_and_average_cmip_EOC_end(diri,field="rsds"):
+def read_and_average_cmip_power_BOC(diri,field="specific generation"):
     path = "/groups/FutureWind/"+diri
     file = "rsds_rsdsdiff_tas"
     
-    files = [f'{path+file}_{year}.nc' for year in range(2070, 2101)]
+    files = [f'{path+file}_{year}.nc' for year in range(1980, 2015)]
     print(files)
     df = xr.open_mfdataset(files,combine="by_coords")
 
     return df[field].mean(dim="time")
+
 
 
 def regrid(ds_in, ds_out, method='conservative'):

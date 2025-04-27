@@ -465,6 +465,9 @@ def TiltedIrradiation(
     surface_orientation,
     trigon_model,
     clearsky_model,
+    bf_direct, 
+    bf_diffuse,  
+    bf_total,
     tracking=0,
     altitude_threshold=1.0,
     irradiation="total",
@@ -507,7 +510,7 @@ def TiltedIrradiation(
         The desired irradiation quantity on the tilted surface.
 
     """
-    influx_toa = ds["rsds"] #definin influx_toa as rsds from model. 
+    influx_toa = ds["rsds"]*bf_total #Bias corrected total irradiance
 
     def clip(influx, influx_max):
         # use .data in clip due to dask-xarray incompatibilities
@@ -517,9 +520,10 @@ def TiltedIrradiation(
     #    influx = clip(ds["influx"], influx_toa)
     #    diffuse = DiffuseHorizontalIrrad(ds, solar_position, clearsky_model, influx)
     #    direct = influx - diffuse
+
     if "rsds" in ds and "rsdsdiff" in ds:
-        direct = clip((ds["rsds"]-ds['rsdsdiff']), influx_toa)
-        diffuse = clip(ds["rsdsdiff"], (influx_toa - direct))
+        direct = clip((ds["rsds"]-ds['rsdsdiff'])*bf_direct, influx_toa - ds["rsdsdiff"]*bf_diffuse) #bias corrected direct irradiance
+        diffuse = clip(ds["rsdsdiff"]*bf_diffuse, influx_toa - (ds["rsds"]-ds['rsdsdiff'])*bf_direct) #bias corrected diffuse irradiance
     else:
         raise AssertionError(
             "Need either influx or influx_direct and influx_diffuse in the "
@@ -633,10 +637,11 @@ def _power_bofinger(irradiance, t_amb, pc):
     return power.rename("AC power")
 
 
-def SolarPanelModel(ds, irradiance, pc):
+def SolarPanelModel(ds, irradiance, pc,bf_tas):
     model = pc.get("model", "huld")
 
     if model == "huld":
+        ds['tas']=ds['tas']*bf_tas
         return _power_huld(irradiance, ds["tas"], pc)
     elif model == "bofinger":
         return _power_bofinger(irradiance, ds["tas"], pc)

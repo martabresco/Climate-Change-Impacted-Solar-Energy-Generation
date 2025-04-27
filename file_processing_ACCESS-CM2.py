@@ -104,10 +104,14 @@ def make_data_set(du,rsds,rsdsdiff,tas):
 
 def main(): 
     # Folder containing the files
-    folder_path = "/groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/" #remember to change depending on model
+    folder_path = "/groups/FutureWind/SFCRAD/ACCESS-CM2/ssp585/r1i1p1f1/"  # Remember to change depending on the model
 
     # Regex to extract the period (last two date segments)
     pattern = re.compile(r"(\d{12})-(\d{12})\.nc$")
+
+    # Desired period for filtering
+    desired_start = datetime(2085, 1, 1, 0, 0)  # Start of the desired period
+    desired_end = datetime(2095, 1, 1, 0, 0)    # End of the desired period
 
     # Organizing files by type and period
     file_dict = defaultdict(list)
@@ -120,13 +124,15 @@ def main():
             start_dt = datetime.strptime(start, "%Y%m%d%H%M")
             end_dt = datetime.strptime(end, "%Y%m%d%H%M")
 
-            # Determine file type and append to the dictionary
-            if "tas" in filename:
-                file_dict["tas"].append((start_dt, end_dt, filename))
-            elif "rsds_" in filename:  # Avoid matching "rsdsdiff"
-                file_dict["rsds"].append((start_dt, end_dt, filename))
-            elif "rsdsdiff" in filename:
-                file_dict["rsdsdiff"].append((start_dt, end_dt, filename))
+            # Filter files to include only those overlapping with the desired period
+            if end_dt >= desired_start and start_dt <= desired_end:
+                # Determine file type and append to the dictionary
+                if "tas" in filename:
+                    file_dict["tas"].append((start_dt, end_dt, filename))
+                elif "rsds_" in filename:  # Avoid matching "rsdsdiff"
+                    file_dict["rsds"].append((start_dt, end_dt, filename))
+                elif "rsdsdiff" in filename:
+                    file_dict["rsdsdiff"].append((start_dt, end_dt, filename))
 
     # Function to find overlapping periods
     def find_overlaps(list1, list2):
@@ -181,7 +187,7 @@ def main():
 
             for year in unique_years:
                 # Generate the file path for the output file
-                output_file = f"/groups/FutureWind/SFCRAD/MRI-ESM2-0/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_{year}.nc" #remember to change depending on model
+                output_file = f"/groups/FutureWind/SFCRAD/ACCESS-CM2/ssp585/r1i1p1f1/rsds_rsdsdiff_tas_{year}.nc"  # Remember to change depending on model
                 
                 # Check if the file already exists
                 if not os.path.exists(output_file):
@@ -204,7 +210,6 @@ def main():
         tas_ds.close()
         rsds_ds.close()
         rsdsdiff_ds.close()
-        # ds.close()
 
     print("Processing complete.")
 
