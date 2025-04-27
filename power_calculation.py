@@ -326,8 +326,8 @@ def main():
     #models = ["ACCESS-CM2", "CanESM5", "CMCC-CM2-SR5", "CMCC-ESM2", "HadGEM3-GC31-LL", "HadGEM3-GC31-MM", "MRI-ESM2-0"]
     #variants = ["r1i1p1f1", "r1i1p2f1", "r1i1p1f1", "r1i1p1f1", "r1i1p1f3", "r1i1p1f3", "r1i1p1f1"]
     #period = ["historical","ssp585"]
-    models = ["ACCESS-CM2","HadGEM3-GC31-MM"]  # Test with only one model
-    variants = ["r1i1p1f1","r1i1p1f3"]  # Corresponding variant for the model
+    models = ["ACCESS-CM2","CanESM5", "CMCC-CM2-SR5", "CMCC-ESM2"]  # Test with only one model
+    variants = ["r1i1p1f1","r1i1p2f1", "r1i1p1f1", "r1i1p1f1"]  # Corresponding variant for the model
     period = ["historical", "ssp585"]
 
 
