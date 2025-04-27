@@ -7,8 +7,6 @@ import logging
 import numpy as np
 import pandas as pd
 import xarray as xr
-from regridding_functions import read_and_average_era5_marta
-from regridding_functions import regrid
 import pv_functions
 import os
 import glob
@@ -51,7 +49,8 @@ def collect_files(base_path, models, variants, periods):
 
 def transform_to_gregorian(ds, year):
     """
-    Transform a dataset with a 360-day calendar to a Gregorian calendar.
+    Transform a dataset with a 360-day calendar to a Gregorian calendar, with handling for 3-hour intervals.
+    Preserves the 30-minute offset starting at 1:30 (e.g., 1:30, 4:30, etc.).
     
     Parameters:
         ds (xarray.Dataset): The dataset with a 360-day calendar.
@@ -60,9 +59,14 @@ def transform_to_gregorian(ds, year):
     Returns:
         xarray.Dataset: The transformed dataset with a Gregorian calendar.
     """
-
-    # Step 1: Build the new time index
+    
+    # Step 1: Build the new time index with 3-hourly timestamps for Gregorian calendar
     new_times = []
+    
+    # The first timestamp starts at 1:30, not 0:30
+    start_hour = 1  # Starting hour is 1
+    start_minute = 30  # Starting minute is 30
+    
     for month in range(1, 13):
         if month == 2:
             days = 29 if is_leap_year(year) else 28
@@ -70,25 +74,28 @@ def transform_to_gregorian(ds, year):
             days = 30
         else:
             days = 31
+        
         for day in range(1, days + 1):
-            new_times.append(cftime.DatetimeGregorian(year, month, day))
-    
+            for hour in range(start_hour, 24, 3):  # 3-hour intervals, starting at 1:30
+                # Add 30 minutes offset as per the original times
+                new_times.append(cftime.DatetimeGregorian(year, month, day, hour, start_minute, 0))  # 30 minutes offset
+
     new_time_index = xr.DataArray(new_times, dims="time")
-
-    # Step 2: Interpolate or match
-    # Original time axis: assume it's equally spaced 360 days
-    old_times = np.linspace(0, 1, ds.dims["time"], endpoint=False)  # normalized
-    new_times_norm = np.linspace(0, 1, len(new_time_index), endpoint=False)
-
-    # Reassign normalized time
+    
+    # Step 2: Interpolate or match (normalized time) for the resampling
+    # Original time axis: assume it's equally spaced 360-day steps (3-hour intervals)
+    old_times = np.linspace(0, 1, ds.dims["time"], endpoint=False)  # normalized time in original dataset
+    new_times_norm = np.linspace(0, 1, len(new_time_index), endpoint=False)  # normalized new time
+    
+    # Step 3: Reassign normalized time to the dataset
     ds = ds.assign_coords(time=("time", old_times))
     
-    # Interpolate onto new normalized time
+    # Step 4: Interpolate onto new normalized time
     ds_interp = ds.interp(time=new_times_norm)
-
-    # Replace the interpolated normalized time with real Gregorian dates
+    
+    # Step 5: Replace the interpolated normalized time with real Gregorian dates
     ds_interp = ds_interp.assign_coords(time=new_time_index)
-
+    
     return ds_interp
 
 def is_leap_year(year):
@@ -102,40 +109,50 @@ def is_leap_year(year):
         bool: True if the year is a leap year, False otherwise.
     """
     return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+
 import xarray as xr
 import numpy as np
 import pandas as pd
 
 def add_february_29(ds, year):
     """
-    Add February 29 to a dataset with a noleap calendar by duplicating February 28.
-    Ensures the time axis is in datetime64[ns] format.
+    Add February 29 to a dataset with a noleap calendar by duplicating all Feb 28 timestamps.
+    Handles 3-hourly (or any sub-daily) datasets correctly.
     """
+    import numpy as np
+    import pandas as pd
+    import xarray as xr
+
     if is_leap_year(year):
-        # 🛠 If time coordinate is not datetime64, convert it manually
-        if not np.issubdtype(ds['time'].dtype, np.datetime64):
+        # Check if the time coordinate is in cftime format
+        if isinstance(ds['time'].values[0], cftime.DatetimeNoLeap):
+            # Convert cftime to pandas datetime64 using to_datetimeindex()
+            ds['time'] = ds.indexes['time'].to_datetimeindex()
+        elif not np.issubdtype(ds['time'].dtype, np.datetime64):
             try:
-                # Force decode using cftime (common for noleap calendars)
-                times = xr.cftime_range(start=f"{year}-01-01", periods=ds.sizes['time'], calendar='noleap')
-                ds['time'] = pd.to_datetime(times.to_datetimeindex())
+                # Convert time to datetime64[ns] if not already in that format
+                ds['time'] = pd.to_datetime(ds['time'].values)
             except Exception as e:
-                raise ValueError(f"Failed to convert time to datetime64: {e}")
+                raise ValueError(f"Failed to convert time to datetime64[ns]: {e}")
 
-        # ✅ Now safe to work with time
+        # Select Feb 28 times
+        feb_28 = ds.sel(time=(ds['time'].dt.month == 2) & (ds['time'].dt.day == 28))
 
-        # Select February 28
-        feb_28_idx = np.where((ds['time'].dt.month == 2) & (ds['time'].dt.day == 28))[0]
-        if feb_28_idx.size > 0:
-            feb_28 = ds.isel(time=feb_28_idx[0])
-            feb_29 = feb_28.expand_dims('time')  # Expand back to have a 'time' dimension
-            feb_29 = feb_29.assign_coords(time=[pd.Timestamp(f"{year}-02-29")])
+        if feb_28.time.size > 0:
+            # Duplicate Feb 28 and shift by +1 day
+            feb_29 = feb_28.copy()
+            feb_29 = feb_29.assign_coords(time=feb_28['time'] + pd.Timedelta(days=1))
+
+            # Concatenate the new Feb 29 data with the original dataset
             ds = xr.concat([ds, feb_29], dim="time")
             ds = ds.sortby('time')
         else:
             print(f"Warning: February 28 not found for year {year}")
+    else:
+        # Handle non-leap years gracefully
+        print(f"Year {year} is not a leap year. No February 29 added.")
 
     return ds
-
    
 
 def power_calculation(files, orientation1, trigon_model, clearsky_model, tracking, panel, output_dir):
@@ -195,23 +212,42 @@ def power_calculation(files, orientation1, trigon_model, clearsky_model, trackin
                     ds['tas'] = ds['tas'].sel(lon=slice(-12, 35), lat=slice(33, 64.8))
 
                     # Bias correct rsds, rsdsdiff, tas
-                    variables1 = ["direct", "diffuse", "temp"]
-                    for var in variables1:
-                        bias_factor = xr.open_dataset(f"/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/{var}_bias_factor_{model}.nc")
-                        if var == "direct":
-                            ds["rsds"] = ds["rsds"] * bias_factor['bias_factor']
-                        elif var == "diffuse":
-                            ds["rsdsdiff"] = ds["rsdsdiff"] * bias_factor['bias_factor']
-                        elif var == "temp":
-                            ds["tas"] = ds["tas"] * bias_factor['bias_factor']
-                    print('Bias correction done')
+                    #variables1 = ["direct", "diffuse", "temp"]
+                    #for var in variables1:
+                     #   bias_factor = xr.open_dataset(f"/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/{var}_bias_factor_{model}.nc")
+                      #  if var == "direct":
+                       #     ds["rsds"] = ds["rsds"] * bias_factor['bias_factor']
+                        #elif var == "diffuse":
+                         #   ds["rsdsdiff"] = ds["rsdsdiff"] * bias_factor['bias_factor']
+                        #elif var == "temp":
+                         #   ds["tas"] = ds["tas"] * bias_factor['bias_factor']
+                    #print('Bias correction done')
 
-                    # Resample to 1-hour intervals
-                    ds = ds.resample(time="1H").ffill()
+                   # Ensure the time coordinate is in a compatible format
+                    if isinstance(ds['time'].values[0], (cftime.DatetimeGregorian, cftime.DatetimeNoLeap)):
+                        # Convert cftime to pandas datetime64
+                        ds['time'] = pd.to_datetime(ds['time'].values.astype(str))  # Convert cftime to string, then to pandas datetime
+                    elif ds['time'].dtype == 'O':
+                        # Convert object dtype to pandas datetime64
+                        ds['time'] = pd.to_datetime(ds['time'].values)
 
-                    # Convert time to datetime64[ns] after all transformations
+                    # Shift the time coordinate backward by 1.5 hours to align with the start of the 3-hour interval
+                    ds['time'] = ds['time'] - np.timedelta64(90, 'm')  # Shift by 90 minutes
+
+                    # Create a new hourly time index that includes the last hour of the year
+                    extended_time = pd.date_range(
+                        start=ds['time'].values[0],
+                        end=ds['time'].values[-1] + np.timedelta64(2, 'h'),  # Extend by 2 hours to cover the last interval
+                        freq="1H"
+                    )
+
+                    # Reindex the dataset to the new hourly time index
+                    ds = ds.reindex(time=extended_time, method="ffill")  # Forward-fill to copy values to hourly intervals
+
+                    # Convert time to datetime64[ns] after all transformations (only for HadGEM models)
                     if model in ["HadGEM3-GC31-LL", "HadGEM3-GC31-MM"]:
-                        ds = ds.assign_coords(time=ds.indexes["time"].to_datetimeindex())
+                        if not isinstance(ds.indexes["time"], pd.DatetimeIndex):
+                            ds = ds.assign_coords(time=ds.indexes["time"].to_datetimeindex())
 
                     # Select the region again after resampling
                     ds_h = ds.sel(lon=slice(-12, 35), lat=slice(33, 64.8))
@@ -229,8 +265,19 @@ def power_calculation(files, orientation1, trigon_model, clearsky_model, trackin
                     # Open mean albedo for each model
                     ds_albedo = xr.open_dataset(f"/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/albedo/mean_albedo_grid_{model}.nc")
                     albedo = ds_albedo['__xarray_dataarray_variable__'].sel(lon=slice(-12, 35), lat=slice(33, 64.8))
+                    # Opening each bias factor 
+                    #for var in variables1:
+                    ds_bias_factor_direct = xr.open_dataset(f"/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/direct_bias_factor_{model}.nc")
+                    ds_bias_factor_diffuse = xr.open_dataset(f"/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/diffuse_bias_factor_{model}.nc")
+                    ds_bias_factor_temp = xr.open_dataset(f"/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/temp_bias_factor_{model}.nc")  
+                    ds_bias_factor_total = xr.open_dataset(f"/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/total_bias_factor_{model}.nc")
+                    bf_direct= ds_bias_factor_direct['bias_factor']
+                    bf_diffuse= ds_bias_factor_diffuse['bias_factor']
+                    bf_temp= ds_bias_factor_temp['bias_factor']
+                    bf_total= ds_bias_factor_total['bias_factor']
+                    print('opened bias factors')  
 
-                    # Calculate tilted irradiation
+                    # Calculate tilted irradiation. bias factor is included in the function
                     irradiation_model = pv_functions.TiltedIrradiation(
                         ds_h,
                         albedo,
@@ -238,14 +285,17 @@ def power_calculation(files, orientation1, trigon_model, clearsky_model, trackin
                         surface_orientation_model,
                         trigon_model,
                         clearsky_model,
+                        bf_direct,
+                        bf_diffuse,
+                        bf_total,
                         tracking=0,
                         altitude_threshold=1.0,
-                        irradiation="total",
+                        irradiation="total", 
                     )
                     print('Tilted irradiation calculated')
 
                     # Calculate power
-                    solar_panel = pv_functions.SolarPanelModel(ds_h, irradiation_model, panel)
+                    solar_panel = pv_functions.SolarPanelModel(ds_h, irradiation_model, panel, bf_temp)
                     print('Solar panel model calculated')
                     aggregated_generation = solar_panel.sum(dim="time")
                     print('Aggregated generation calculated')
@@ -270,13 +320,15 @@ def power_calculation(files, orientation1, trigon_model, clearsky_model, trackin
      
 
 def main():
-    base_path="/groups/FutureWind/SFCRAD/"
-    models = ["ACCESS-CM2", "CanESM5", "CMCC-CM2-SR5", "CMCC-ESM2", "HadGEM3-GC31-LL", "HadGEM3-GC31-MM", "MRI-ESM2-0"]
-    variants = ["r1i1p1f1", "r1i1p2f1", "r1i1p1f1", "r1i1p1f1", "r1i1p1f3", "r1i1p1f3", "r1i1p1f1"]
-    period = ["historical","ssp585"]
-    #models = ["ACCESS-CM2"]  # Test with only one model
-    #variants = ["r1i1p1f1"]  # Corresponding variant for the model
-    #period = ["historical"]
+    base_path="/groups/FutureWind/SFCRAD/" 
+    # ACCESS-CM2", "CanESM5", "CMCC-CM2-SR5", "CMCC-ESM2", ,"HadGEM3-GC31-LL", "HadGEM3-GC31-MM" "MRI-ESM2-0 , 
+    # "r1i1p1f1" "r1i1p2f1", "r1i1p1f1", "r1i1p1f1", ,"r1i1p1f3", "r1i1p1f3", "r1i1p1f1"
+    #models = ["ACCESS-CM2", "CanESM5", "CMCC-CM2-SR5", "CMCC-ESM2", "HadGEM3-GC31-LL", "HadGEM3-GC31-MM", "MRI-ESM2-0"]
+    #variants = ["r1i1p1f1", "r1i1p2f1", "r1i1p1f1", "r1i1p1f1", "r1i1p1f3", "r1i1p1f3", "r1i1p1f1"]
+    #period = ["historical","ssp585"]
+    models = ["ACCESS-CM2","HadGEM3-GC31-MM"]  # Test with only one model
+    variants = ["r1i1p1f1","r1i1p1f3"]  # Corresponding variant for the model
+    period = ["historical", "ssp585"]
 
 
     orientation1='latitude_optimal'
@@ -314,11 +366,13 @@ def main():
     output_dir = "/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/power/"
 
     files=collect_files(base_path, models, variants, period)
+    # Filter files for the year 1988
+     
     #for model in files:
-     #   for period in files[model]:
-      #      files[model][period] = [
-       #         file for file in files[model][period] if "1988" in file  # Replace "1988" with the year you want to test
-        #    ]
+     #   for period_key in files[model]:
+      #      files[model][period_key] = [
+       #         file for file in files[model][period_key] if "1988" in file
+        #    ] 
 
     power_calculation(files, orientation1, trigon_model, clearsky_model, tracking, panel, output_dir)
 
