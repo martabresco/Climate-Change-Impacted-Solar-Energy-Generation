@@ -172,6 +172,9 @@ def power_calculation(files, orientation1, trigon_model, clearsky_model, trackin
                     # Replace "rsds_rsdsdiff_tas" with "solar_power"
                     file_name = file_name.replace("rsds_rsdsdiff_tas", "solar_power")
                     output_file = os.path.join(output_dir_period, file_name)
+
+                    file_name_1h="1h"+file_name
+                    output_file_1h = os.path.join(output_dir_period, file_name_1h)
                     
                     # Check if the solar power file already exists
                     if os.path.exists(output_file):
@@ -179,7 +182,7 @@ def power_calculation(files, orientation1, trigon_model, clearsky_model, trackin
                         continue
                     
                     # Prepare aggregated generation file name
-                    file_name_agg = file_name + "_aggregated"
+                    file_name_agg = "aggregated_"+file_name 
                     output_file_agg = os.path.join(output_dir_period, file_name_agg)
                     
                     # Check if the aggregated generation file already exists
@@ -199,29 +202,30 @@ def power_calculation(files, orientation1, trigon_model, clearsky_model, trackin
                     # Transform the time coordinate for HadGEM models
                     if model in ["HadGEM3-GC31-LL", "HadGEM3-GC31-MM"]:
                         ds = transform_to_gregorian(ds, year)
+                        if isinstance(ds['time'].values[0], cftime.datetime):
+                            print(f"Calendar type after transform_to_gregorian for {model}: {ds['time'].values[0].calendar}")
+                        else:
+                            print(f"Time coordinate is not in cftime format after transform_to_gregorian for {model}.")
                     elif model in ["CanESM5", "CMCC-CM2-SR5", "CMCC-ESM2"]:
                         ds = add_february_29(ds, year)
+                        if isinstance(ds['time'].values[0], cftime.datetime):
+                            print(f"Calendar type after add_february_29 for {model}: {ds['time'].values[0].calendar}")
+                        else:
+                            print(f"Time coordinate is not in cftime format after add_february_29 for {model}.")
                     else:
                         # Decode time normally for other models
                         ds = xr.decode_cf(ds)
-                    print('Time decoded')
-
+                        if isinstance(ds['time'].values[0], cftime.datetime):
+                            print(f"Calendar type after decode_cf for {model}: {ds['time'].values[0].calendar}")
+                        else:
+                            print(f"Time coordinate is not in cftime format after decode_cf for {model}.")
+                    print('Calendar transformation done')
+                    
+                    """ 
                     # Select the region of interest
                     ds['rsds'] = ds['rsds'].sel(lon=slice(-12, 35), lat=slice(33, 64.8))
                     ds['rsdsdiff'] = ds['rsdsdiff'].sel(lon=slice(-12, 35), lat=slice(33, 64.8))
                     ds['tas'] = ds['tas'].sel(lon=slice(-12, 35), lat=slice(33, 64.8))
-
-                    # Bias correct rsds, rsdsdiff, tas
-                    #variables1 = ["direct", "diffuse", "temp"]
-                    #for var in variables1:
-                     #   bias_factor = xr.open_dataset(f"/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/bias_factors/{var}_bias_factor_{model}.nc")
-                      #  if var == "direct":
-                       #     ds["rsds"] = ds["rsds"] * bias_factor['bias_factor']
-                        #elif var == "diffuse":
-                         #   ds["rsdsdiff"] = ds["rsdsdiff"] * bias_factor['bias_factor']
-                        #elif var == "temp":
-                         #   ds["tas"] = ds["tas"] * bias_factor['bias_factor']
-                    #print('Bias correction done')
 
                    # Ensure the time coordinate is in a compatible format
                     if isinstance(ds['time'].values[0], (cftime.DatetimeGregorian, cftime.DatetimeNoLeap)):
@@ -231,7 +235,8 @@ def power_calculation(files, orientation1, trigon_model, clearsky_model, trackin
                         # Convert object dtype to pandas datetime64
                         ds['time'] = pd.to_datetime(ds['time'].values)
 
-                    # Shift the time coordinate backward by 1.5 hours to align with the start of the 3-hour interval
+                     
+                    Shift the time coordinate backward by 1.5 hours to align with the start of the 3-hour interval
                     ds['time'] = ds['time'] - np.timedelta64(90, 'm')  # Shift by 90 minutes
 
                     # Create a new hourly time index that includes the last hour of the year
@@ -247,19 +252,20 @@ def power_calculation(files, orientation1, trigon_model, clearsky_model, trackin
                     # Convert time to datetime64[ns] after all transformations (only for HadGEM models)
                     if model in ["HadGEM3-GC31-LL", "HadGEM3-GC31-MM"]:
                         if not isinstance(ds.indexes["time"], pd.DatetimeIndex):
-                            ds = ds.assign_coords(time=ds.indexes["time"].to_datetimeindex())
+                            ds = ds.assign_coords(time=ds.indexes["time"].to_datetimeindex()) 
+                    """
 
                     # Select the region again after resampling
-                    ds_h = ds.sel(lon=slice(-12, 35), lat=slice(33, 64.8))
-                    print('Time resampling done')
+                    ds = ds.sel(lon=slice(-12, 35), lat=slice(33, 64.8))
+                    print('Coordinates selection')
 
                     # Calculate the solar position
-                    solar_position_model = pv_functions.SolarPosition(ds_h, time_shift="+30min")
+                    solar_position_model = pv_functions.SolarPosition(ds, time_shift="0h")
                     print('Solar position calculated')
 
                     # Calculate panel orientation
                     orientation = pv_functions.get_orientation(orientation1)
-                    surface_orientation_model = pv_functions.SurfaceOrientation(ds_h, solar_position_model, orientation, tracking)
+                    surface_orientation_model = pv_functions.SurfaceOrientation(ds, solar_position_model, orientation, tracking)
                     print('Surface orientation calculated')
 
                     # Open mean albedo for each model
@@ -279,7 +285,7 @@ def power_calculation(files, orientation1, trigon_model, clearsky_model, trackin
 
                     # Calculate tilted irradiation. bias factor is included in the function
                     irradiation_model = pv_functions.TiltedIrradiation(
-                        ds_h,
+                        ds,
                         albedo,
                         solar_position_model,
                         surface_orientation_model,
@@ -295,15 +301,26 @@ def power_calculation(files, orientation1, trigon_model, clearsky_model, trackin
                     print('Tilted irradiation calculated')
 
                     # Calculate power
-                    solar_panel = pv_functions.SolarPanelModel(ds_h, irradiation_model, panel, bf_temp)
-                    print('Solar panel model calculated')
-                    aggregated_generation = solar_panel.sum(dim="time")
+                    solar_panel = pv_functions.SolarPanelModel(ds, irradiation_model, panel, bf_temp)
+                    print('Solar power calculated with hourly means')
+
+                    total_solar_power=3 * solar_panel #I multiply times 3 to get the 
+
+
+                    aggregated_generation = total_solar_power.sum(dim="time")
                     print('Aggregated generation calculated')
 
+                    # Does not make a lot of sense to save the hourly again
+                    """  try:
+                        solar_panel.to_netcdf(output_file_1h)
+                        print(f"Saved total solar power data to {output_file_1h}")
+                    except Exception as e:
+                        print(f"Failed to save solar power data: {e}")
+                    """ 
                     # Save the solar panel data to a NetCDF file
                     try:
-                        solar_panel.to_netcdf(output_file)
-                        print(f"Saved solar power data to {output_file}")
+                        total_solar_power.to_netcdf(output_file)
+                        print(f"Saved total solar power data to {output_file}")
                     except Exception as e:
                         print(f"Failed to save solar power data: {e}")
 
@@ -326,9 +343,9 @@ def main():
     #models = ["ACCESS-CM2", "CanESM5", "CMCC-CM2-SR5", "CMCC-ESM2", "HadGEM3-GC31-LL", "HadGEM3-GC31-MM", "MRI-ESM2-0"]
     #variants = ["r1i1p1f1", "r1i1p2f1", "r1i1p1f1", "r1i1p1f1", "r1i1p1f3", "r1i1p1f3", "r1i1p1f1"]
     #period = ["historical","ssp585"]
-    models = ["ACCESS-CM2","CanESM5", "CMCC-CM2-SR5", "CMCC-ESM2"]  # Test with only one model
-    variants = ["r1i1p1f1","r1i1p2f1", "r1i1p1f1", "r1i1p1f1"]  # Corresponding variant for the model
-    period = ["historical", "ssp585"]
+    models = ["HadGEM3-GC31-LL", "HadGEM3-GC31-MM"]  # Test with only one model
+    variants = ["r1i1p1f3", "r1i1p1f3"]  # Corresponding variant for the model
+    period = ["historical","ssp585"]
 
 
     orientation1='latitude_optimal'
@@ -341,7 +358,7 @@ def main():
         "source": "Huld 2010",  # Source of the model
 
         # Used for calculating capacity per m2
-        "efficiency": 0.1,  # Efficiency of the panel
+        "efficiency": 0.2,  # Efficiency of the panel
 
         # Panel temperature coefficients
         "c_temp_amb": 1,  # Panel temperature coefficient of ambient temperature
@@ -368,12 +385,12 @@ def main():
     files=collect_files(base_path, models, variants, period)
     # Filter files for the year 1988
      
-    #for model in files:
-     #   for period_key in files[model]:
-      #      files[model][period_key] = [
-       #         file for file in files[model][period_key] if "1988" in file
-        #    ] 
-
+    """ for model in files:
+        for period_key in files[model]:
+            files[model][period_key] = [
+                file for file in files[model][period_key] if "1988" in file
+            ] 
+ """
     power_calculation(files, orientation1, trigon_model, clearsky_model, tracking, panel, output_dir)
 
 if __name__ == "__main__":

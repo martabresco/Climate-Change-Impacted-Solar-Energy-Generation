@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --time=24:00:00
-#SBATCH --job-name=albedo calc
+#SBATCH --job-name=era5 power
 #SBATCH --nodes=2
 #SBATCH --mail-user=s233224@dtu.dk
 #SBATCH --mail-type=END
