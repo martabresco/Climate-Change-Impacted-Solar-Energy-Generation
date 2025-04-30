@@ -47,56 +47,71 @@ def collect_files(base_path, models, variants, periods):
 
     return files_model
 
-def transform_to_gregorian(ds, year):
+from datetime import datetime
+def transform_360_to_gregorian(ds: xr.Dataset, year: int) -> xr.Dataset:
     """
-    Transform a dataset with a 360-day calendar to a Gregorian calendar, with handling for 3-hour intervals.
-    Preserves the 30-minute offset starting at 1:30 (e.g., 1:30, 4:30, etc.).
-    
+    Transform a dataset with a 360-day calendar to a proleptic Gregorian calendar.
+
+    - Duplicates day 30 for all months that should have 31 days.
+    - Removes Feb 30 in leap years, and Feb 29 + 30 in non-leap years.
+    - Preserves rsds, rsdsdiff, and tas values exactly — no interpolation.
+    - Assumes 3-hourly time steps starting at 01:30 on January 1.
+
     Parameters:
         ds (xarray.Dataset): The dataset with a 360-day calendar.
-        year (int): The year being processed.
-    
-    Returns:
-        xarray.Dataset: The transformed dataset with a Gregorian calendar.
-    """
-    
-    # Step 1: Build the new time index with 3-hourly timestamps for Gregorian calendar
-    new_times = []
-    
-    # The first timestamp starts at 1:30, not 0:30
-    start_hour = 1  # Starting hour is 1
-    start_minute = 30  # Starting minute is 30
-    
-    for month in range(1, 13):
-        if month == 2:
-            days = 29 if is_leap_year(year) else 28
-        elif month in [4, 6, 9, 11]:
-            days = 30
-        else:
-            days = 31
-        
-        for day in range(1, days + 1):
-            for hour in range(start_hour, 24, 3):  # 3-hour intervals, starting at 1:30
-                # Add 30 minutes offset as per the original times
-                new_times.append(cftime.DatetimeGregorian(year, month, day, hour, start_minute, 0))  # 30 minutes offset
+        year (int): The target Gregorian year to convert into.
 
-    new_time_index = xr.DataArray(new_times, dims="time")
-    
-    # Step 2: Interpolate or match (normalized time) for the resampling
-    # Original time axis: assume it's equally spaced 360-day steps (3-hour intervals)
-    old_times = np.linspace(0, 1, ds.dims["time"], endpoint=False)  # normalized time in original dataset
-    new_times_norm = np.linspace(0, 1, len(new_time_index), endpoint=False)  # normalized new time
-    
-    # Step 3: Reassign normalized time to the dataset
-    ds = ds.assign_coords(time=("time", old_times))
-    
-    # Step 4: Interpolate onto new normalized time
-    ds_interp = ds.interp(time=new_times_norm)
-    
-    # Step 5: Replace the interpolated normalized time with real Gregorian dates
-    ds_interp = ds_interp.assign_coords(time=new_time_index)
-    
-    return ds_interp
+    Returns:
+        xarray.Dataset: The transformed dataset with Gregorian-style time axis.
+    """
+
+    def is_leap_year(y):
+        return (y % 4 == 0 and y % 100 != 0) or (y % 400 == 0)
+
+    months_with_31 = [1, 3, 5, 7, 8, 10, 12]
+    time_dim = ds.dims["time"]
+
+    # Step 1: Build synthetic time axis assuming 3-hourly steps starting at 01:30
+    df = ds[["rsds", "rsdsdiff", "tas"]].to_dataframe().reset_index()
+
+    # Replace CFTimeIndex with synthetic datetime based on time index order
+    time_axis = pd.date_range(start=datetime(year, 1, 1, 1, 30), periods=time_dim, freq="3H")
+    df["time"] = df["time"].map(dict(zip(df["time"].unique(), time_axis)))
+
+
+    # Step 3: Duplicate day 30 if month has 31 days
+    extended_rows = []
+    for month in range(1, 13):
+        month_data = df[df["time"].dt.month == month]
+        for day in sorted(month_data["time"].dt.day.unique()):
+            day_data = month_data[month_data["time"].dt.day == day]
+            extended_rows.append(day_data)
+            if day == 30 and month in months_with_31:
+                day_31 = day_data.copy()
+                day_31["time"] = day_31["time"] + pd.Timedelta(days=1)
+                extended_rows.append(day_31)
+
+    full_df = pd.concat(extended_rows).reset_index(drop=True)
+
+    # Step 4: Remove invalid February days
+    feb_mask = full_df["time"].dt.month == 2
+    if is_leap_year(year):
+        full_df = full_df[~((feb_mask) & (full_df["time"].dt.day == 30))]
+    else:
+        full_df = full_df[~((feb_mask) & (full_df["time"].dt.day.isin([29, 30])))]
+
+    # Step 5: Drop duplicates to ensure unique (time, lat, lon) combinations
+    full_df = full_df.drop_duplicates(subset=["time", "lat", "lon"])
+
+    # Step 6: Convert back to xarray Dataset
+    full_df = full_df.set_index(["time", "lat", "lon"])
+    ds_out = full_df.to_xarray()
+
+    # Step 7: Annotate time axis
+    ds_out["time"].attrs["calendar"] = "proleptic_gregorian"
+    ds_out["time"].attrs["units"] = f"hours since {year}-01-01 00:00:00"
+
+    return ds_out
 
 def is_leap_year(year):
     """
@@ -201,7 +216,7 @@ def power_calculation(files, orientation1, trigon_model, clearsky_model, trackin
 
                     # Transform the time coordinate for HadGEM models
                     if model in ["HadGEM3-GC31-LL", "HadGEM3-GC31-MM"]:
-                        ds = transform_to_gregorian(ds, year)
+                        ds = transform_360_to_gregorian(ds, year)
                         if isinstance(ds['time'].values[0], cftime.datetime):
                             print(f"Calendar type after transform_to_gregorian for {model}: {ds['time'].values[0].calendar}")
                         else:
@@ -220,40 +235,6 @@ def power_calculation(files, orientation1, trigon_model, clearsky_model, trackin
                         else:
                             print(f"Time coordinate is not in cftime format after decode_cf for {model}.")
                     print('Calendar transformation done')
-                    
-                    """ 
-                    # Select the region of interest
-                    ds['rsds'] = ds['rsds'].sel(lon=slice(-12, 35), lat=slice(33, 64.8))
-                    ds['rsdsdiff'] = ds['rsdsdiff'].sel(lon=slice(-12, 35), lat=slice(33, 64.8))
-                    ds['tas'] = ds['tas'].sel(lon=slice(-12, 35), lat=slice(33, 64.8))
-
-                   # Ensure the time coordinate is in a compatible format
-                    if isinstance(ds['time'].values[0], (cftime.DatetimeGregorian, cftime.DatetimeNoLeap)):
-                        # Convert cftime to pandas datetime64
-                        ds['time'] = pd.to_datetime(ds['time'].values.astype(str))  # Convert cftime to string, then to pandas datetime
-                    elif ds['time'].dtype == 'O':
-                        # Convert object dtype to pandas datetime64
-                        ds['time'] = pd.to_datetime(ds['time'].values)
-
-                     
-                    Shift the time coordinate backward by 1.5 hours to align with the start of the 3-hour interval
-                    ds['time'] = ds['time'] - np.timedelta64(90, 'm')  # Shift by 90 minutes
-
-                    # Create a new hourly time index that includes the last hour of the year
-                    extended_time = pd.date_range(
-                        start=ds['time'].values[0],
-                        end=ds['time'].values[-1] + np.timedelta64(2, 'h'),  # Extend by 2 hours to cover the last interval
-                        freq="1H"
-                    )
-
-                    # Reindex the dataset to the new hourly time index
-                    ds = ds.reindex(time=extended_time, method="ffill")  # Forward-fill to copy values to hourly intervals
-
-                    # Convert time to datetime64[ns] after all transformations (only for HadGEM models)
-                    if model in ["HadGEM3-GC31-LL", "HadGEM3-GC31-MM"]:
-                        if not isinstance(ds.indexes["time"], pd.DatetimeIndex):
-                            ds = ds.assign_coords(time=ds.indexes["time"].to_datetimeindex()) 
-                    """
 
                     # Select the region again after resampling
                     ds = ds.sel(lon=slice(-12, 35), lat=slice(33, 64.8))
@@ -310,13 +291,17 @@ def power_calculation(files, orientation1, trigon_model, clearsky_model, trackin
                     aggregated_generation = total_solar_power.sum(dim="time")
                     print('Aggregated generation calculated')
 
-                    # Does not make a lot of sense to save the hourly again
-                    """  try:
-                        solar_panel.to_netcdf(output_file_1h)
-                        print(f"Saved total solar power data to {output_file_1h}")
-                    except Exception as e:
-                        print(f"Failed to save solar power data: {e}")
-                    """ 
+                    # For total_solar_power
+                    if "time" in total_solar_power.coords and "units" in total_solar_power.coords["time"].attrs:
+                        del total_solar_power.coords["time"].attrs["units"]
+
+                    # For aggregated_generation (only if it has 'time')
+                    if "time" in aggregated_generation.coords and "units" in aggregated_generation.coords["time"].attrs:
+                        del aggregated_generation.coords["time"].attrs["units"]
+                    for key in ["units", "calendar"]:
+                        if "time" in total_solar_power.coords and key in total_solar_power.coords["time"].attrs:
+                            del total_solar_power.coords["time"].attrs[key]
+
                     # Save the solar panel data to a NetCDF file
                     try:
                         total_solar_power.to_netcdf(output_file)
