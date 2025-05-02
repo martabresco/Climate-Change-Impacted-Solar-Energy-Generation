@@ -47,69 +47,68 @@ def collect_files(base_path, models, variants, periods):
 
     return files_model
 
+import xarray as xr
+import numpy as np
+import pandas as pd
+import calendar
+import cftime
 from datetime import datetime
-def transform_360_to_gregorian(ds: xr.Dataset, year: int) -> xr.Dataset:
+
+def convert_360_to_gregorian_direct(ds: xr.Dataset, year: int) -> xr.Dataset:
     """
-    Transform a dataset with a 360-day calendar to a proleptic Gregorian calendar.
-
-    - Duplicates day 30 for all months that should have 31 days.
-    - Removes Feb 30 in leap years, and Feb 29 + 30 in non-leap years.
-    - Preserves rsds, rsdsdiff, and tas values exactly — no interpolation.
-    - Assumes 3-hourly time steps starting at 01:30 on January 1.
-
-    Parameters:
-        ds (xarray.Dataset): The dataset with a 360-day calendar.
-        year (int): The target Gregorian year to convert into.
-
-    Returns:
-        xarray.Dataset: The transformed dataset with Gregorian-style time axis.
+    Remap a 360-day, 3-hourly xarray.Dataset onto a full Gregorian calendar
+    by direct indexing into the original 360-day timestamps—no broadcasting.
     """
+    # 1) Build the new Gregorian time axis
+    full_time = pd.date_range(
+        start = datetime(year,  1,  1, 1, 30),
+        end   = datetime(year, 12, 31,22,30),
+        freq  = "3H",
+    )
+    nt = len(full_time)
+    ny = ds.sizes["lat"]
+    nx = ds.sizes["lon"]
 
-    def is_leap_year(y):
-        return (y % 4 == 0 and y % 100 != 0) or (y % 400 == 0)
+    # 2) Precompute, for each new slot, the 360-day timestamp(s) to sample
+    def _targets(ts):
+        m,d,h,mi = ts.month, ts.day, ts.hour, ts.minute
+        # leap-year Feb 29 → average 28 Feb & 1 Mar
+        if m==2 and d==29 and calendar.isleap(year):
+            return [
+                cftime.Datetime360Day(year, 2, 28, h, mi, 0),
+                cftime.Datetime360Day(year, 3,  1, h, mi, 0),
+            ]
+        # clamp day>30 to day 30
+        dd = d if d<=30 else 30
+        return [cftime.Datetime360Day(year, m, dd, h, mi, 0)]
 
-    months_with_31 = [1, 3, 5, 7, 8, 10, 12]
-    time_dim = ds.dims["time"]
+    mapped = [_targets(ts) for ts in full_time]
 
-    # Step 1: Build synthetic time axis assuming 3-hourly steps starting at 01:30
-    df = ds[["rsds", "rsdsdiff", "tas"]].to_dataframe().reset_index()
+    # 3) For each variable, allocate an output buffer and fill it
+    out = {}
+    for var in ds.data_vars:
+        arr = np.empty((nt, ny, nx), dtype=ds[var].dtype)
+        for i, targets in enumerate(mapped):
+            if len(targets)==1:
+                arr[i, :, :] = ds[var].sel(time=targets[0]).values
+            else:
+                a = ds[var].sel(time=targets[0]).values
+                b = ds[var].sel(time=targets[1]).values
+                arr[i, :, :] = 0.5 * (a + b)
+        out[var] = xr.DataArray(
+            arr,
+            dims=("time","lat","lon"),
+            coords={
+                "time": full_time,
+                "lat":  ds["lat"],
+                "lon":  ds["lon"],
+            },
+        )
 
-    # Replace CFTimeIndex with synthetic datetime based on time index order
-    time_axis = pd.date_range(start=datetime(year, 1, 1, 1, 30), periods=time_dim, freq="3H")
-    df["time"] = df["time"].map(dict(zip(df["time"].unique(), time_axis)))
-
-
-    # Step 3: Duplicate day 30 if month has 31 days
-    extended_rows = []
-    for month in range(1, 13):
-        month_data = df[df["time"].dt.month == month]
-        for day in sorted(month_data["time"].dt.day.unique()):
-            day_data = month_data[month_data["time"].dt.day == day]
-            extended_rows.append(day_data)
-            if day == 30 and month in months_with_31:
-                day_31 = day_data.copy()
-                day_31["time"] = day_31["time"] + pd.Timedelta(days=1)
-                extended_rows.append(day_31)
-
-    full_df = pd.concat(extended_rows).reset_index(drop=True)
-
-    # Step 4: Remove invalid February days
-    feb_mask = full_df["time"].dt.month == 2
-    if is_leap_year(year):
-        full_df = full_df[~((feb_mask) & (full_df["time"].dt.day == 30))]
-    else:
-        full_df = full_df[~((feb_mask) & (full_df["time"].dt.day.isin([29, 30])))]
-
-    # Step 5: Drop duplicates to ensure unique (time, lat, lon) combinations
-    full_df = full_df.drop_duplicates(subset=["time", "lat", "lon"])
-
-    # Step 6: Convert back to xarray Dataset
-    full_df = full_df.set_index(["time", "lat", "lon"])
-    ds_out = full_df.to_xarray()
-
-    # Step 7: Annotate time axis
+    # 4) Package into a Dataset and tag metadata
+    ds_out = xr.Dataset(out)
     ds_out["time"].attrs["calendar"] = "proleptic_gregorian"
-    ds_out["time"].attrs["units"] = f"hours since {year}-01-01 00:00:00"
+    ds_out["time"].attrs["units"]    = f"hours since {year}-01-01 00:00:00"
 
     return ds_out
 
@@ -216,7 +215,7 @@ def power_calculation(files, orientation1, trigon_model, clearsky_model, trackin
 
                     # Transform the time coordinate for HadGEM models
                     if model in ["HadGEM3-GC31-LL", "HadGEM3-GC31-MM"]:
-                        ds = transform_360_to_gregorian(ds, year)
+                        ds = convert_360_to_gregorian_direct(ds, year)
                         if isinstance(ds['time'].values[0], cftime.datetime):
                             print(f"Calendar type after transform_to_gregorian for {model}: {ds['time'].values[0].calendar}")
                         else:
