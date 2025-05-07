@@ -21,16 +21,16 @@ def map_plots(variable, cmap='viridis', vmin=None, vmax=None, title='', label=''
     Returns:
     - None (displays the plot).
     """
-    # Replace zeros with NaNs in the variable data
-    variable = xr.where(variable != 0, variable, float('nan'))
+    # Replace zeros with NaNs in the variable data and slice to the desired range
+    variable = xr.where(variable != 0, variable, float('nan')).sel(x=slice(-12, 35), y=slice(33, 64))
 
     # Extract longitude and latitude
-    lon = variable.lon
-    lat = variable.lat
+    lon = variable.x
+    lat = variable.y
 
     # Create the plot
     fig, ax = plt.subplots(figsize=(12, 8), subplot_kw={'projection': ccrs.PlateCarree()})
-    ax.set_extent([lon.min(), lon.max(), lat.min(), lat.max()], crs=ccrs.PlateCarree())
+    ax.set_extent([-12, 35, 33, 64], crs=ccrs.PlateCarree())  # Restrict the extent to the specified range
 
     # Plot the data
     c = ax.pcolormesh(
