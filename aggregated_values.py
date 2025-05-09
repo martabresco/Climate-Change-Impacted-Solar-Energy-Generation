@@ -47,6 +47,15 @@ def yearly_aggregation(files):
                 file_name = os.path.basename(file_path)
                 # Extract the year as a string for later
                 year = int(re.search(r"(\d{4})", file_name).group(1))
+                # Check whether the aggregated file already exists
+                output_file = os.path.join(
+                    os.path.dirname(file_path),
+                    f"aggregated_solar_power_{year}.nc"
+                )
+                if os.path.exists(output_file):
+                    print(f"Output for {year} already exists ({output_file}), skipping.")
+                    continue
+
                 # Open the dataset
                 ds = xr.open_dataset(file_path)
 
@@ -102,8 +111,9 @@ def main():
 
     # Collect files
     files = collect_files(base_path, models, periods)
-    yearly_aggregation(files)
-    seasonal_aggregation(files)
+    print(files)
+    #yearly_aggregation(files)
+    #seasonal_aggregation(files)
 
 if __name__ == "__main__":
     main()
