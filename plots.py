@@ -361,3 +361,240 @@ def country_plots_weighted(
     plt.show()
 
 
+def map_plots_discrete(variable, cmap='viridis', setnan=True, vmin=None, vmax=None, norm=None, title='', label=''):
+    """
+    Function to plot a map with the given variable and customization options, using a legend instead of a colorbar.
+
+    Parameters:
+    - variable: xarray.DataArray, the variable to plot (must include lon and lat coordinates).
+    - cmap: str or ListedColormap, colormap for the plot (default: 'viridis').
+    - vmin: float, minimum value for the color scale (default: None).
+    - vmax: float, maximum value for the color scale (default: None).
+    - norm: matplotlib.colors.Normalize or BoundaryNorm, normalization for discrete colors (default: None).
+    - title: str, title of the plot.
+    - label: str, label for the legend.
+
+    Returns:
+    - None (displays the plot).
+    """
+    import matplotlib.patches as mpatches
+
+    # Replace zeros with NaNs in the variable data and slice to the desired range
+    if setnan:
+        variable = xr.where(variable != 0, variable, float('nan')).sel(x=slice(-12, 35), y=slice(33, 64))
+    else:
+        variable = variable.sel(x=slice(-12, 35), y=slice(33, 64))
+
+    # Extract longitude and latitude
+    lon = variable.x
+    lat = variable.y
+
+    # Create the plot
+    fig, ax = plt.subplots(figsize=(12, 8), subplot_kw={'projection': ccrs.PlateCarree()})
+    ax.set_extent([-12, 35, 33, 64], crs=ccrs.PlateCarree())  # Restrict the extent to the specified range
+
+    # Plot the data
+    c = ax.pcolormesh(
+        lon, lat, variable,  # Ensure correct shapes
+        transform=ccrs.PlateCarree(),
+        cmap=cmap,  # Colormap for the plot
+        shading='auto',
+        vmin=vmin,
+        vmax=vmax,
+        norm=norm  # Use norm for discrete colors if provided
+    )
+
+    # Add map features
+    ax.coastlines(resolution='10m', linewidth=1)
+    ax.add_feature(cfeature.BORDERS, linestyle=':')
+    ax.add_feature(cfeature.LAND, facecolor='lightgray')
+    ax.add_feature(cfeature.OCEAN, facecolor='white')
+    ax.set_title(title, fontsize=16)  # Set the plot title
+
+    # Add gridlines aligned with x and y coordinates
+    gridlines = ax.gridlines(
+        draw_labels=True, 
+        linewidth=0.5, 
+        color='gray', 
+        linestyle='--', 
+        x_inline=False, 
+        y_inline=False
+    )
+
+    # Reduce the number of gridlines for better readability
+    gridlines.xlocator = plt.FixedLocator(lon.values)
+    gridlines.ylocator = plt.FixedLocator(lat.values)  # Use latitude values for y gridlines
+
+    # Set custom formatters for longitude and latitude
+    gridlines.xformatter = mticker.FuncFormatter(lambda x, _: f"{x:.2f}") 
+    gridlines.yformatter = mticker.FuncFormatter(lambda y, _: f"{y:.2f}") 
+
+    # Configure gridline labels
+    gridlines.top_labels = False  # Disable labels on the top
+    gridlines.right_labels = False  # Disable labels on the right
+    gridlines.xlabel_style = {'fontsize': 12, 'rotation': 45, 'ha': 'right'}  # Rotate and align x-axis labels
+    gridlines.ylabel_style = {'fontsize': 12}  # Increased font size for y-axis labels
+
+    # Create a custom legend
+    if norm is not None:
+        levels = norm.boundaries[:-1]  # Get the discrete levels
+        colors = [cmap(norm(level)) for level in levels]
+        legend_patches = [mpatches.Patch(color=color, label=f"{int(level)} {label}") for color, level in zip(colors, levels)]
+        ax.legend(
+            handles=legend_patches,
+            title="Agreement Levels",
+            loc="center left",
+            bbox_to_anchor=(1, 0.5),  # Move the legend further to the right
+            fontsize=10,
+            title_fontsize=12,
+            frameon=True,  # Add a border around the legend
+            edgecolor="black",
+        )
+
+    # Show the plot
+    plt.show()
+
+import xarray as xr
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+import cartopy.crs as ccrs
+import cartopy.feature as cfeature
+import matplotlib.ticker as mticker
+import numpy as np
+
+def map_plots_mask(variable,
+              cmap='viridis',
+              setnan=True,
+              vmin=None,
+              vmax=None,
+              title='',
+              label='',
+              robust_mask: xr.DataArray = None,
+              hatch_style: str = '////',
+              hatch_color: str = 'gray'):
+    """
+    Plot a map of `variable` on PlateCarree.  Optionally overlay a hatch
+    on cells where `robust_mask` is False.
+
+    Parameters
+    ----------
+    variable : xarray.DataArray
+        Must have coords .x (lon) and .y (lat).
+    cmap : str or Colormap, optional
+        Main colormap for the variable.
+    setnan : bool, optional
+        If True, zero-values in `variable` become NaN.
+    vmin, vmax : float, optional
+        Color scale limits.
+    title : str, optional
+        Plot title.
+    label : str, optional
+        Colorbar label.
+    robust_mask : xarray.DataArray of bool, optional
+        Same dims as `variable`.  Wherever this is False, a hatch
+        will be drawn on top of the cell.
+    hatch_style : str, optional
+        Matplotlib hatch pattern, e.g. '/', 'xx', '////'.
+    hatch_color : str, optional
+        Color of the hatch lines.
+
+    Returns
+    -------
+    fig, ax : Matplotlib Figure and Axes
+    """
+
+    # 0) handle NaNs
+    if setnan:
+        variable = xr.where(variable != 0, variable, np.nan)
+
+    # 1) slice to desired lon/lat box
+    variable = variable.sel(x=slice(-12, 35), y=slice(33, 64))
+
+    # 2) extract coords
+    lon = variable.x
+    lat = variable.y
+
+    # 3) build figure + map
+    fig, ax = plt.subplots(
+        figsize=(12, 8),
+        subplot_kw={'projection': ccrs.PlateCarree()}
+    )
+    ax.set_extent([-12, 35, 33, 64], crs=ccrs.PlateCarree())
+
+    # 4) main pcolormesh
+    cmap_obj = mpl.cm.get_cmap(cmap).copy() if isinstance(cmap, str) else cmap
+    mesh = ax.pcolormesh(
+        lon, lat, variable,
+        transform=ccrs.PlateCarree(),
+        cmap=cmap_obj,
+        shading='auto',
+        vmin=vmin, vmax=vmax
+    )
+
+    # 5) optional hatch overlay
+    if robust_mask is not None:
+        # align & slice the mask to same box
+        rm = robust_mask.sel(x=slice(-12, 35), y=slice(33, 64))
+        # inverse mask: 1 where we WANT a hatch
+        inv = (~rm).astype(int)
+        ax.contourf(
+            lon, lat, inv,
+            levels=[0.5, 1.5],
+            colors='none',
+            hatches=[hatch_style],
+            transform=ccrs.PlateCarree(),
+            alpha=0  # ensure we only see the hatch
+        )
+
+    # 6) coastlines & land/ocean
+    ax.add_feature(cfeature.LAND,   facecolor='lightgray', zorder=0)
+    ax.add_feature(cfeature.OCEAN,  facecolor='white',     zorder=0)
+    ax.coastlines(resolution='10m', linewidth=1)
+    ax.add_feature(cfeature.BORDERS, linestyle=':')
+
+    # 7) gridlines
+    gl = ax.gridlines(
+        draw_labels=True,
+        linewidth=0.5,
+        color='gray',
+        linestyle='--',
+        x_inline=False,
+        y_inline=False
+    )
+    # place labels every 5°
+    gl.xlocator = plt.FixedLocator(np.arange(-10, 36, 1))
+    gl.ylocator = plt.FixedLocator(np.arange(34, 65, 1))
+    gl.xformatter = mticker.FuncFormatter(lambda x, _: f"{x:.0f}°E")
+    gl.yformatter = mticker.FuncFormatter(lambda y, _: f"{y:.0f}°N")
+    gl.top_labels = False
+    gl.right_labels = False
+    gl.xlabel_style = {'fontsize': 12, 'rotation': 45, 'ha': 'right'}
+    gl.ylabel_style = {'fontsize': 12}
+
+    # 8) title
+    ax.set_title(title, fontsize=16)
+
+    # 9) colorbar
+    cbar = fig.colorbar(mesh, ax=ax, orientation='vertical', pad=0.02)
+    cbar.set_label(label, rotation=90, labelpad=15, fontsize=14)
+    cbar.ax.tick_params(labelsize=12)
+
+    # 10) optional legend entry for the hatch
+    if robust_mask is not None:
+        from matplotlib.patches import Patch
+        hatch_patch = Patch(
+            facecolor='none',
+            edgecolor=hatch_color,
+            hatch=hatch_style,
+            label='Masked out (robust_mask=False)'
+        )
+        ax.legend(
+            handles=[hatch_patch],
+            loc='lower left',
+            framealpha=0.8,
+            fontsize=12,
+            title='Overlay'
+        )
+
+    plt.tight_layout()
+    return fig, ax
