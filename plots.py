@@ -23,7 +23,8 @@ def map_plots(variable, cmap='viridis', setnan=True, vmin=None, vmax=None, title
     """
     # Replace zeros with NaNs in the variable data and slice to the desired range
     if setnan==True:
-        variable = xr.where(variable != 0, variable, float('nan')).sel(x=slice(-12, 35), y=slice(33, 64))
+        variable = variable.where(~np.isnan(variable)).sel(x=slice(-12, 35), y=slice(33, 64))
+        #variable = xr.where(variable != 0, variable, float('nan')).sel(x=slice(-12, 35), y=slice(33, 64))
     else:
         variable = variable.sel(x=slice(-12, 35), y=slice(33, 64))
 
