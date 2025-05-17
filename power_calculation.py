@@ -327,8 +327,8 @@ def main():
     #models = ["ACCESS-CM2", "CanESM5", "CMCC-CM2-SR5", "CMCC-ESM2", "HadGEM3-GC31-LL", "HadGEM3-GC31-MM", "MRI-ESM2-0"]
     #variants = ["r1i1p1f1", "r1i1p2f1", "r1i1p1f1", "r1i1p1f1", "r1i1p1f3", "r1i1p1f3", "r1i1p1f1"]
     #period = ["historical","ssp585"]
-    models = ["HadGEM3-GC31-LL", "HadGEM3-GC31-MM"]  # Test with only one model
-    variants = ["r1i1p1f3", "r1i1p1f3"]  # Corresponding variant for the model
+    models = ["ACCESS-CM2", "CanESM5", "CMCC-CM2-SR5", "CMCC-ESM2", "HadGEM3-GC31-LL", "HadGEM3-GC31-MM", "MRI-ESM2-0"]  # Test with only one model
+    variants = ["r1i1p1f1", "r1i1p2f1", "r1i1p1f1", "r1i1p1f1", "r1i1p1f3", "r1i1p1f3", "r1i1p1f1"]  # Corresponding variant for the model
     period = ["historical","ssp585"]
 
 
@@ -356,15 +356,23 @@ def main():
         # Fitting parameters
         "k_1": -0.017162,
         "k_2": -0.040289,
-        "k_3": -0.004681,
-        "k_4": 0.000148,
-        "k_5": 0.000169,
-        "k_6": 0.000005,
+        "k_3": 0,
+        "k_4": 0,
+        "k_5": 0,
+        "k_6": 0,
+
+                # Fitting parameters
+        #"k_1": -0.017162,
+        #"k_2": -0.040289,
+        #"k_3": -0.004681,
+        #"k_4": 0.000148,
+        #"k_5": 0.000169,
+        #"k_6": 0.000005,
 
         # Inverter efficiency
         "inverter_efficiency": 0.9
 }
-    output_dir = "/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/power/"
+    output_dir = "/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/power_notemp/"
 
     files=collect_files(base_path, models, variants, period)
     # Filter files for the year 1988
