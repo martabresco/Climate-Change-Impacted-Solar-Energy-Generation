@@ -19,7 +19,7 @@ def collect_files(base_path, models, periods):
             # Construct the path
             search_path = os.path.join(base_path, model, period)
             # Match files with the desired pattern
-            file_pattern = os.path.join(search_path, "solar_power_*.nc")
+            file_pattern = os.path.join(search_path, "aggregated_solar_power_*.nc")
             matched_files = glob.glob(file_pattern)
 
             # Filter files by year
@@ -84,7 +84,7 @@ def regrid_power(files, standard_grid):
     for model, periods in files.items():
         for period, file_list in periods.items():
             # Create the output directory for the model and period
-            output_dir = os.path.join(f"/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/power/", model+"_1x1grid", period)
+            output_dir = os.path.join(f"/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/power_notemp/", model+"_1x1grid", period)
 
             for file_path in file_list:
                 # Construct the output file path
