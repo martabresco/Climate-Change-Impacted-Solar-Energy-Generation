@@ -116,7 +116,7 @@ def regrid_power(files, standard_grid):
 
 
 def main():
-    base_path = "/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/power/"
+    base_path = "/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/power_notemp/"
     models = ["ACCESS-CM2", "CanESM5", "CMCC-CM2-SR5", "CMCC-ESM2","HadGEM3-GC31-LL", "HadGEM3-GC31-MM", "MRI-ESM2-0"]  # Test with only one model
     periods = ["historical", "ssp585"]
 
