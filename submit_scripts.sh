@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --time=24:00:00
-#SBATCH --job-name=power no temp
+#SBATCH --job-name=power no temp regrid
 #SBATCH --nodes=2
 #SBATCH --mail-user=s233224@dtu.dk
 #SBATCH --mail-type=END
@@ -8,4 +8,4 @@
 #SBATCH --partition=rome,workq
 
 module load python/3.13.1            # Load the Python module (adjust based on your HPC environment)
-python power_calculation.py                 # Execute your Python script
+python models_to_1x1.py                 # Execute your Python script
