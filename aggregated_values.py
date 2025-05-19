@@ -17,7 +17,8 @@ def collect_files(base_path, models, periods):
         model_files = {}
         for period in periods:
             # Construct the path
-            search_path = os.path.join(base_path, model+"_1x1grid", period)
+            search_path = os.path.join(base_path, model, period)
+            #model+"_1x1grid"
             # Match files with the desired pattern
             file_pattern = os.path.join(search_path, "solar_power_*.nc")
             matched_files = glob.glob(file_pattern)
@@ -105,7 +106,7 @@ def seasonal_aggregation(files):
 
 
 def main():
-    base_path = "/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/power/"
+    base_path = "/work/users/s233224/Climate-Change-Impacted-Solar-Energy-Generation/power_notemp/"
     models = ["ACCESS-CM2", "CanESM5", "CMCC-CM2-SR5", "CMCC-ESM2","HadGEM3-GC31-LL", "HadGEM3-GC31-MM", "MRI-ESM2-0"]  # Test with only one model
     periods = ["historical", "ssp585"]
 
@@ -113,7 +114,7 @@ def main():
     files = collect_files(base_path, models, periods)
     print(files)
     #yearly_aggregation(files)
-    #seasonal_aggregation(files)
+    seasonal_aggregation(files)
 
 if __name__ == "__main__":
     main()
