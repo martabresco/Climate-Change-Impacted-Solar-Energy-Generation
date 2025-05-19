@@ -19,7 +19,7 @@ def collect_files(base_path, models, periods):
             # Construct the path
             search_path = os.path.join(base_path, model, period)
             # Match files with the desired pattern
-            file_pattern = os.path.join(search_path, "aggregated_solar_power_*.nc")
+            file_pattern = os.path.join(search_path, "aggregated_solar_power_seasons_*.nc")
             matched_files = glob.glob(file_pattern)
 
             # Filter files by year
