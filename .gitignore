@@ -10,3 +10,4 @@ rsds_3hr_MPI-ESM1-2-LR_historical_r1i1p1f1_gn_199001010130-200912312230.nc
 *.nc
 atlite_examples/eeg_anlagenregister_2015.08.utf8.csv
 /atlite_examples/mv_github
+repo-mirror.git/
